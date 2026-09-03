@@ -2,12 +2,12 @@
 #import "../perspective_warp/perspective_warp.typ": render-perspective-diagram
 
 // Initialize translator for this diagram
-#let t = load-i18n("_page_177_Figure_4.i18n.yml")
+#let t = load-i18n("_page_180_Figure_1.i18n.yml")
 
-#let label-top = t("The set of all natural numbers")
-#let label-bot = t("Part of that set")
+#let label-top = t("Natural numbers")
+#let label-bot = t("Odd numbers")
 
-#let infinite-sets-diagram(width: 100%) = {
+#let natural-vs-odd-diagram(width: 100%) = {
   let font = get-font-bytes-for-lang(current-lang)
   render-perspective-diagram(
     top-label: label-top,
@@ -16,8 +16,8 @@
     font-bottom: font,
     top-start: 1,
     top-step: 1,
-    bot-start: 2,
-    bot-step: 1,
+    bot-start: 1,
+    bot-step: 2,
     rate: 0.00095,
     width: 1000.0,
     height: 240.0,
@@ -26,4 +26,4 @@
 }
 
 // Default preview
-#infinite-sets-diagram()
+#natural-vs-odd-diagram()

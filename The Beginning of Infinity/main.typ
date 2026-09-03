@@ -1,13 +1,8 @@
 #import "@preview/cmarker:0.1.10"
 
-#import "i18n.typ": current-lang, load-i18n, str-to-lines
+#import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n, str-to-lines
 
 #let t = load-i18n("main.i18n.yml")
-
-#let (title-fonts, cover-fonts) = {
-  import "fonts.typ": get-fonts
-  get-fonts(current-lang)
-}
 
 #{
   import "cover.typ": cover-page
@@ -22,7 +17,7 @@
       (t("AUTHOR OF"), 0.3),
       (t("THE FABRIC OF REALITY"), 0.6),
     ),
-    cover-fonts,
+    fonts-for-current-lang.sans,
   )
 }
 
@@ -36,7 +31,7 @@
     subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
     publisher: "VIKING",
     lang: current-lang,
-    fonts: title-fonts,
+    fonts: fonts-for-current-lang.serif,
   )
 }
 
@@ -50,7 +45,7 @@
     title: t("The Beginning of Infinity"),
     logo-width: 2.2cm,
     lang: current-lang,
-    fonts: title-fonts,
+    fonts: fonts-for-current-lang.serif,
   )
 }
 
@@ -64,7 +59,7 @@
     subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
     publisher: "VIKING",
     lang: current-lang,
-    fonts: title-fonts,
+    fonts: fonts-for-current-lang.serif,
   )
 }
 

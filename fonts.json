@@ -1,0 +1,51 @@
+{
+  "base-serif": [
+    "EB Garamond",
+    "Libertinus Serif",
+    "Times New Roman",
+    "serif"
+  ],
+  "base-sans": [
+    "Trebuchet MS",
+    "Impact",
+    "Liberation Sans",
+    "Arial",
+    "sans-serif"
+  ],
+  "lang-to-fonts-map": {
+    "km": {
+      "serif": [
+        "Noto Serif Khmer",
+        "Khmer OS"
+      ],
+      "sans": [
+        "Noto Sans Khmer",
+        "Khmer OS"
+      ]
+    },
+    "ja": {
+      "serif": [
+        "Noto Serif CJK JP"
+      ],
+      "sans": [
+        "Noto Sans CJK JP"
+      ]
+    },
+    "zh": {
+      "serif": [
+        "Noto Serif CJK SC"
+      ],
+      "sans": [
+        "Noto Sans CJK SC"
+      ]
+    },
+    "ar": {
+      "serif": [
+        "Amiri"
+      ],
+      "sans": [
+        "Noto Sans Arabic"
+      ]
+    }
+  }
+}

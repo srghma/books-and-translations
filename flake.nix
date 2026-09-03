@@ -31,11 +31,16 @@
             typst
             typstyle
             pandoc
+            fontconfig
           ] ++ runtimeLibs;
 
           shellHook = ''
             export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath runtimeLibs}:$LD_LIBRARY_PATH"
             export UV_PYTHON="${pkgs.python3}/bin/python"
+            export TYPST_ROOT="/"
+            if [ ! -f fonts-to-ttf-path.json ]; then
+              python3 ./generate_fonts_to_ttf_path.py
+            fi
           '';
         };
       }
