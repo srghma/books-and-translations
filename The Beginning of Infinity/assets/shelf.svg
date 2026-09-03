@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 60" width="100%" height="100%">
+  <defs>
+    <linearGradient id="shelfGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b27d00" stop-opacity="0.0"/>
+      <stop offset="45%" stop-color="#e6a100" stop-opacity="0.45"/>
+      <stop offset="85%" stop-color="#ffd54f" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#fff59d" stop-opacity="0.95"/>
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb300" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffb300" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="270" cy="38" rx="250" ry="22" fill="url(#centerGlow)"/>
+  <polygon points="45,30 495,30 535,58 5,58" fill="url(#shelfGrad)"/>
+  <line x1="5" y1="58" x2="535" y2="58" stroke="#fff9c4" stroke-width="1.8"/>
+</svg>

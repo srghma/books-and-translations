@@ -45,3 +45,7 @@ convert-to-typst-dir dir *ARGS:
 # Format all Typst files for a specific book directory using typstyle
 format-typst-dir dir *ARGS:
     typstyle -i "{{dir}}"/*.typ {{ARGS}}
+
+# Split markdown file into individual chapters by contents
+split-by-contents *ARGS:
+    ./split_markdown_by_contents.py {{ARGS}}
