@@ -7,10 +7,8 @@ fn main() {
     let font_map: HashMap<String, String> =
         serde_json::from_str(&font_map_str).expect("failed to parse fonts-to-ttf-path.json");
 
-    let font_en = fs::read(&font_map["Times New Roman"])
-        .expect("failed to read Times New Roman");
-    let font_km = fs::read(&font_map["Noto Serif Khmer"])
-        .expect("failed to read Noto Serif Khmer");
+    let font_en = fs::read(&font_map["Times New Roman"]).expect("failed to read Times New Roman");
+    let font_km = fs::read(&font_map["Noto Serif Khmer"]).expect("failed to read Noto Serif Khmer");
 
     // 1. Page 177 Fig 4 - English
     let config_fig4_en = serde_json::json!({

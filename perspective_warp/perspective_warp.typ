@@ -41,3 +41,60 @@
     #image(svg-bytes, format: "svg", width: output-width)
   ]
 }
+
+#let render-gene-spiral(
+  width: 266.0,
+  height: 210.0,
+  start-x: 35.0,
+  start-y: 118.0,
+  vanish-x: 245.0,
+  vanish-y: 55.0,
+  radius-x: 52.0,
+  radius-y: 68.0,
+  nodes-per-turn: 8,
+  num-turns: 60,
+  rate: 0.0042,
+  pitch: 26.0,
+  gap: 0.0,
+  theta-offset-deg: -70.0,
+  tilt-deg: -10.0,
+  black-color: "#16181b",
+  gray-color: "#8b9097",
+  spoke-color: "#686d75",
+  axis-color: "rgba(130, 135, 142, 0.6)",
+  draw-axis: true,
+  stroke-base: 2.4,
+  output-width: 100%,
+) = {
+  let config = bytes(
+    json.encode((
+      width: width,
+      height: height,
+      start_x: start-x,
+      start_y: start-y,
+      vanish_x: vanish-x,
+      vanish_y: vanish-y,
+      radius_x: radius-x,
+      radius_y: radius-y,
+      nodes_per_turn: nodes-per-turn,
+      num_turns: num-turns,
+      rate: rate,
+      pitch: pitch,
+      gap: gap,
+      theta_offset_deg: theta-offset-deg,
+      tilt_deg: tilt-deg,
+      black_color: black-color,
+      gray_color: gray-color,
+      spoke_color: spoke-color,
+      axis_color: axis-color,
+      draw_axis: draw-axis,
+      stroke_base: stroke-base,
+    )),
+  )
+
+  let svg-bytes = warp-plugin.render_gene_spiral(config)
+  align(center)[
+    #image(svg-bytes, format: "svg", width: output-width)
+  ]
+}
+
