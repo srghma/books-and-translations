@@ -1489,8 +1489,6 @@ following half minute. Should you receive a bag during that half minute, pass it
 
 ![](_page_183_Figure_2.jpeg)
 
-![](_page_183_Diagram_3.jpeg)
-
 Infinity Hotel's waste-disposal system
 
 All the trash in the hotel has disappeared from the universe. It is *nowhere*. No one has *put* it 'nowhere': every guest has merely moved some of it into another room. The 'nowhere' where all that trash has gone is called, in physics, a *singularity*. Singularities may well happen in reality, inside black holes and elsewhere. But I digress: at the moment, we are still discussing mathematics, not physics.
@@ -1504,8 +1502,6 @@ higher-numbered rooms is called an *infinite regress.* It is one of the things t
 One day in Infinity Hotel, a guest's pet puppy happens to climb into a trash bag. The owner does not notice, and passes the bag, with the puppy, to the next room.
 
 Within two minutes the puppy is nowhere. The distraught owner phones the front desk. The receptionist announces over the publicaddress system, 'We apologize for the inconvenience, but an item of value has been inadvertently thrown away. Will all guests please
-
-![](_page_184_Picture_4.jpeg)
 
 ![](_page_184_Diagram_5.jpeg)
 
@@ -2486,7 +2482,7 @@ and something like this
 
 So, for each particle individually, the event is rather like a collision with a semi-silvered mirror. Each atom plays the role of the mirror for the other atom. But the multiversal view of both particles looks like this
 
-![](_page_299_Picture_2.jpeg)
+![](_page_298_Picture_5.jpeg)
 
 where at the end of the collision some of the instances of each atom have become fungible with what was originally a different atom.
 

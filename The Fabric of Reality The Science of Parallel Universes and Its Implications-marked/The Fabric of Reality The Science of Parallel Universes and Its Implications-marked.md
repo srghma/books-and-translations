@@ -6,8 +6,6 @@
 
 ![](_page_0_Picture_12.jpeg)
 
-![](_page_0_Picture_13.jpeg)
-
 ![](_page_0_Picture_14.jpeg)
 
 ![](_page_0_Picture_15.jpeg)
@@ -70,7 +68,7 @@ Born in Haifa, Israel, David Deutsch was educated at Cambridge University and Ox
 
 - Publishers Weekly
 
-![](_page_3_Picture_1.jpeg)
+![](_page_7_Picture_1.jpeg)
 
 # The Fabric of Reality
 
@@ -119,7 +117,7 @@ Dedicated to the memory of Karl Popper, Hugh Everett and Alan Turing, and to Ric
 |     | Bibliography                               | 367    |
 |     | Index                                      | 371    |
 
-![](_page_9_Picture_1.jpeg)
+![](_page_7_Picture_1.jpeg)
 
 ## Preface
 
@@ -361,8 +359,6 @@ This is hard to demonstrate with a torch alone, just because it is difficult to 
 
 ![](_page_49_Figure_1.jpeg)
 
-![](_page_49_Picture_2.jpeg)
-
 FIG u RE 2.4 Making a narrow beam by passing light through two successive holes.
 
 greater separation between the first and second screens, can one bring the umbra - the region of total darkness - ever closer, without limit, to the straight line through the centres of the two holes? Can the illuminated region between the second and third screens be confined to an arbitrarily narrow cone ? In goldsmiths' terminology, we are now asking something like 'how "ductile" is light' - how fine a thread can it be drawn into? Gold can be drawn into threads one ten-thousandth of a millimetre chick.
@@ -370,8 +366,6 @@ greater separation between the first and second screens, can one bring the umbra
 It turns out chat light is not as ductile as gold! Long before the holes get as small as a ten-thousandth of a millimetre, in fact even with holes as large as a millimetre or so in diameter, the light begins noticeably to rebel. Instead of passing through the holes in straight lines, it refuses to be confined and spreads out after each hole. And as it spreads, it 'frays'. The smaller the hole is, the more the light spreads out from its straight-line path. Intricate patterns of light and shadow appear. We no longer see simply a bright region and a dark region on the third screen, with a penumbra in between, but instead concentric rings of varying thickness and brightness. There is also colour, because white light consists of a mixture of photons of various colours, and each colour spreads and frays in a slightly different pattern. Figure 2.5 shows a typical pattern that might be formed on the third screen by white light that has passed through holes in the first two screens. Remember,
 
 ![](_page_50_Picture_1.jpeg)
-
-![](_page_50_Figure_2.jpeg)
 
 FIGURE 2. 5 The pattern of light and shadow formed by white light after passing through a small circular hole.
 
@@ -396,8 +390,6 @@ In reality, though, what happens is nothing like that. The real shadow of a barr
 So, adding two more light sources darkens the point X; removing them illuminates it again. How ? One might imagine two photons heading towards X and bouncing off each other like billiard balls. Either photon alone would have hit X, but the two together interfere with each other so that they both end up elsewhere. I shall show in a moment that this explanation cannot be true. Nevertheless, the basic idea of it is inescapable: something must be coming through that second pair of slits to prevent the light from the first pair from
 
 ![](_page_52_Figure_4.jpeg)
-
-![](_page_52_Picture_5.jpeg)
 
 FIG URE 2 . 7 The shadows cast by a barrier containinR (a) four and (b) two straight, parallel slits.
 
@@ -557,7 +549,7 @@ already contain the seeds of the problem. For example, clouds wander even more t
 
 One solves a problem by finding new or amended theories, containing explanations which do not have the deficiencies, but do retain the merits, of existing explanations (Figure 3.2). Thus, after a problem presents itself (stage 1), the 11ext stage always involves conjecture: proposing new theories, or modifying or reinterpreting old ones, in the hope of solving the problem (stage 2) . The conjectures are then criticized which, if the criticism is rational, entails examining and comparing them to see which offers the best explanations, according to the criteria inherent in the problem (stage 3). When a conjectured theory fails to survive criticism - chat is, when it appears to offer worse explanations than other theories do - it is abandoned. If we find ourselves abandoning one of our originally held theories in favour of one of the newly proposed ones (stage 4) , we tentatively deem our problem-solving enterprise to have made progress. I say 'tentatively', because subsequent problemsolving will probably involve altering or replacing even these new, apparently satisfactory theories, and sometimes even resurrecting some of the apparently unsatisfactory ones. Thus the solution, however good, is not the end of the story: it is a starting-point for the next problem-solving process (stage 5). This illustrates another of the misconceptions behind induccivism. In science the object of the exercise is not to find a theory that will, or is likely to, be deemed true for ever; it is to find the best theory available now, and if possible to improve on all available theories. A scientific argument is intended to persuade us chat a given explanation is the best one available. It does not and could not say anything about how chat explanation will fare when, in the future, it is subjected to new types of criticism and compared with explanations that have yet to be invented. A good explanation may make good predic-
 
-![](_page_75_Diagram_3.jpeg)
+![](_page_76_Diagram_4.jpeg)
 
 tions about the future, but the one thing that no explanation can even begin to predict is the content or quality of its own future rivals.
 
@@ -2104,8 +2096,6 @@ If you were present in the illustrated region of the multiverse, all copies of y
 
 ![](_page_292_Diagram_1.jpeg)
 
-![](_page_292_Figure_2.jpeg)
-
 FIG URE 11.7 A region of the multiverse containing a spinning coin. Each point in the diagram represents one snapshot.
 
 into slightly different versions is responsible for the subjectively probabilistic character of quantum predictions. For if you asked, initially, what result you were destined to see for the coin toss, the answer would be that that is strictly unpredictable, for half the copies of you that are asking that question would see 'heads' and the other half would see 'tails'. There is no such thing as 'which half' would see 'heads', any more than there is an answer to the question 'which one am I?'. For practical purposes you could regard this as a probabilistic prediction that the coin has a 50 per cent chance of coming up 'heads', and a 50 per cent chance of coming up 'tails'.
@@ -2188,7 +2178,7 @@ But is this effect really an impediment to the accurate rendering of time travel
 
 It seems paradoxical because in renderings of past-directed time travel the user plays a unique double, or multiple, role. Because of the looping that is involved, where for instance one or more copies of the user may co-exist and interact, the virtual-reality generator is in effect required to render the user while simultaneously responding to the user's actions. For example, let us imagine that I am the user of a virtual-reality generator running a time-travelrendering program. Suppose that when I switch on the program, the environment that I see around me is a futuristic laboratory. In the middle there is a revolving door, like those at the entrances of large buildings, except that this one is opaque and is almost entirely enclosed in an opaque cylinder. The only way in or out of the cylinder is a single entrance cut in its side. The door within revolves continuously. It seems at first sight that there is little one can do with this device except to enter it, go round one or more times with the revolving door, and come out again. But above the entrance is a sign: 'Pathway to the Past'. It is a time machine, a fictional,
 
-![](_page_307_Picture_1.jpeg)
+![](_page_310_Picture_4.jpeg)
 
 FIGURE 1:z..1 Spacetime path taken by a time traveller.
 
@@ -2648,7 +2638,7 @@ Jacob Bronowski, The Ascent of Man, BBC Publications, 198 1, Little Brown, 1976.
 - Roger Penrose, The Emperor's New Mind: Concerning Computers, Minds, and the Laws of Physics, Oxford University Press, 1989. Karl Popper, Objective Knowledge: An Evolutionary Approach, Clarendon Press, 1972. Randolph Quirk, Sidney Greenbaum, Geoffrey Leech and Jan Svartvik, A Comprehensive Grammar of the English Language, 7th edn, Longman, 1989. Dennis Sciama, The Unity of the Universe, Faber & Faber, 1967. Ian Stewart, Does God Play Dice? The Mathematics of Chaos, Basil Blackwell, 1989; Penguin Books, 1990.
 - L. J. Stockmeyer and A. K. Chandra, 'Intrinsically Difficult Problems', Scientific American, May 1979. Frank Tipler, The Physics of Immortality, Doubleday, 1995. Alan Turing, 'Computing Machinery and Intelligence', Mind, October 1950. [Reprinted in The Mind's I, edited by Douglas Hofstadter and Daniel C. Dennett, Harvester, 1981.) Steven Weinberg, Gravitation and Cosmology, John Wiley, 1972. Steven Weinberg, The First Three Minutes, Basic Books, 1977. Steven Weinberg, Dreams of a Final Theory, Vintage, 1993, Random, 1994. John Archibald Wheeler, A journey into Gravity and Spacetime, Scientific American Library, 1990. Lewis Wolpert, The Unnatural Nature of Science, Faber & Faber, 1992, HUP, 1993. Benjamin Woolley, Virtual Wo'rlds, Basil Blackwell, 1992; Penguin Books, 1993.
 
-![](_page_381_Picture_1.jpeg)
+![](_page_7_Picture_1.jpeg)
 
 ## Index
 
@@ -2807,4 +2797,4 @@ recollapse of 162., 35 s
 
 universe - cont. see also multiverse; parallel universes unpredictability 203 , 208, 2.2.o; see also probability utilitarianism 361, 362, 363 variation and selection 68, 182, 188, 332 Venus, phases of 77 video games, virtual-reality 100, 103, 12.7-8, 137 virtual reality 98-12.2., 255 based on the wrong laws 136 and future-directed time travel 290 as interactive n3, 114 and living processes 175 and mathematical truths 255, 257 and science n7-18, 135 and observation 2.2.5 and proof 2.2.4 and rendering logically possible environments 129 theory of 243 ultimate limits of 105, 196 virtual-reality generators 99, 102, 103, 104, III, II6, 117, 225 , 297-8, 300-304, 3o6-8 and the brain 12I, 12.4-5, 12.6 r�t! Omtgotu environments T28 and externally elapsed time 12.5 and the laws of physics 243-4 and past-directed time travel 291, 293 physically possible 12.6, 133, 135 principal components n2 rendering n8-I9, 179, 243, 244, 245 , 291, 295, 297, 298-9, 307 repertoire 105 , Ill, 12.4, 12.6, 12.8-9, 130, 134, 135, 140, I64 and time machines 318 and the Turing principle 134, 135, 163-4, 181 ultimate 12.3-6, 129 universal i24, 130-31, 134, 135, 137, 139, 163-4, 197, 29I, 292, 303, 310, 340, 348 'working memory' I23-4 war 22, I84, 185 Watkins, John 144 weather 6, 63, 98, 200-20I, 202 weightlessness 1o6, 107, 108 Weinberg, Steven pointlessness of the universe 346 ·unimportance of explanation 3-4 Wheeler, John Archibald 328 'Why Both Popper and Watkins Fail to Solve the Problem of Induction' (Worrall) 143-4 Wickramasinghe, Chandra 333 Wooters, William 278 world-view 62, 75, 83, 97, 159, 161, 169, 318-19, 321, 331, 335 Darwin and 337 ever greater changes in 57 and misleading phenomena 103 and moral values 3 59, 36I and the multiverse 48 Newtonian 56, 58 Penrose and 239, 2.40 positivism rejected as a 84 and problem-solving 68 reductionist 23, 345, 347 single-universe 93, 2I7 and a Theory of Everything 18 unified 366 Worrall, John 143-4 Zeno of Elea 249
 
-![](_page_402_Picture_1.jpeg)
+![](_page_7_Picture_1.jpeg)

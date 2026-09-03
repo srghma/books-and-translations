@@ -1,12 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run
 """
 delete_unreferenced_images_all.py
 
-Runs unreferenced image deletion across all 4 book directories in the repository:
-  1. The Beginning of Infinity Explanations that Transform the World-document-to-markdown
-  2. The Beginning of Infinity Explanations that Transform the World-marked
-  3. The Fabric of Reality The Science of Parallel Universes and Its Implications-document-to-markdown
-  4. The Fabric of Reality The Science of Parallel Universes and Its Implications-marked
+Runs unreferenced image deletion across specified book directories (or defaults).
+Can be called with specific directories or driven by a justfile.
 """
 
 import os
@@ -14,21 +11,17 @@ import sys
 import argparse
 from delete_unreferenced_images import delete_unreferenced_images, human_readable_size
 
-BOOK_DIRS = [
-    "The Beginning of Infinity Explanations that Transform the World-document-to-markdown",
-    "The Beginning of Infinity Explanations that Transform the World-marked",
-    "The Fabric of Reality The Science of Parallel Universes and Its Implications-document-to-markdown",
-    "The Fabric of Reality The Science of Parallel Universes and Its Implications-marked",
-]
-
-
 def main():
     parser = argparse.ArgumentParser(
-        description="Delete unreferenced images across all 4 book directories."
+        description="Delete unreferenced images across book directories."
+    )
+    parser.add_argument(
+        "directories", nargs="*", default=[],
+        help="List of directories to scan (defaults to standard book directories)"
     )
     parser.add_argument(
         "--root", default=".",
-        help="Root directory containing the 4 book directories (default: current directory)"
+        help="Root directory containing book directories (default: current directory)"
     )
     parser.add_argument(
         "-n", "--dry-run", action="store_true",
@@ -49,8 +42,10 @@ def main():
     args = parser.parse_args()
 
     root_dir = os.path.abspath(args.root)
+    target_dirs = args.directories
+
     mode_str = "[DRY-RUN MODE]" if args.dry_run else "[DELETION MODE]"
-    print(f"{mode_str} Starting unreferenced image cleanup across all 4 directories...\n" + "=" * 70 + "\n")
+    print(f"{mode_str} Starting unreferenced image cleanup...\n" + "=" * 70 + "\n")
 
     total_images_all = 0
     total_referenced_all = 0
@@ -60,8 +55,9 @@ def main():
 
     results = []
 
-    for rel_dir in BOOK_DIRS:
-        full_dir = os.path.join(root_dir, rel_dir)
+    for rel_dir in target_dirs:
+        full_dir = rel_dir if os.path.isabs(rel_dir) else os.path.join(root_dir, rel_dir)
+        display_name = os.path.basename(full_dir) if not os.path.isabs(rel_dir) else rel_dir
         if not os.path.isdir(full_dir):
             print(f"Warning: Directory not found: {full_dir}", file=sys.stderr)
             continue
@@ -73,7 +69,7 @@ def main():
             verbose=args.verbose,
             no_git=args.no_git
         )
-        results.append((rel_dir, res))
+        results.append((display_name, res))
         total_images_all += res["total_images"]
         total_referenced_all += res["referenced_count"]
         total_unreferenced_all += res["unreferenced_count"]
@@ -83,10 +79,10 @@ def main():
     # Print overall summary table
     print("=" * 70)
     print("OVERALL SUMMARY:")
-    for rel_dir, res in results:
+    for display_name, res in results:
         action_word = "Would delete" if args.dry_run else "Deleted"
         print(
-            f"  • {rel_dir}:\n"
+            f"  • {display_name}:\n"
             f"      {res['referenced_count']}/{res['total_images']} referenced | "
             f"{action_word}: {res['deleted_count']} file(s) ({human_readable_size(res['total_bytes'])})"
         )
