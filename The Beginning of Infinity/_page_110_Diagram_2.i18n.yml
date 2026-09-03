@@ -1,0 +1,15 @@
+"With one constant,\n20% of the choices\nare within 10% of\nthe boundary.":
+  km: "ជាមួយថេរមួយ\n២០% នៃជម្រើស\nស្ថិតក្នុងរង្វង់ ១០%\nនៃព្រំដែន។"
+  de: "Mit einer Konstante\nliegen 20 % der Möglichkeiten\ninnerhalb von 10 %\nder Grenze."
+
+"With two constants,\n36% of them are.":
+  km: "ជាមួយថេរពីរ\n៣៦% នៃពួកវាគឺស្ថិតនៅទីនោះ។"
+  de: "Mit zwei Konstanten\nsind es 36 %."
+
+"With three constants,\nit's 48.8%.":
+  km: "ជាមួយថេរបី\nវាគឺ ៤៨.៨%។"
+  de: "Mit drei Konstanten\nsind es 48,8 %."
+
+"With 100 constants,\nit's over 99.9999999%.":
+  km: "ជាមួយថេរ ១០០\nវាលើសពី ៩៩.៩៩៩៩៩៩៩%។"
+  de: "Mit 100 Konstanten\nsind es über 99,9999999 %."

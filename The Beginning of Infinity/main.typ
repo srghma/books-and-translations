@@ -1,10 +1,8 @@
-#import "@preview/transl:0.2.1": transl
 #import "@preview/cmarker:0.1.10"
 
-// Global Language Setup
-#let current-lang = "en" // Change to "km" for Khmer
-#set text(lang: current-lang)
-#transl(data: yaml("i18n.yml"))
+#import "i18n.typ": current-lang, load-i18n, str-to-lines
+
+#let t = load-i18n("main.i18n.yml")
 
 #let (title-fonts, cover-fonts) = {
   import "fonts.typ": get-fonts
@@ -15,14 +13,14 @@
   import "cover.typ": cover-page
   cover-page(
     (
-      (transl("THE"), 0.8),
-      (transl("BEGINNING"), 1.0),
-      (transl("OF"), 0.8),
-      (transl("INFINITY"), 1.0),
-      (transl("EXPLANATIONS_THAT_TRANSFORM_THE_WORLD"), 0.3),
-      (transl("DAVID_DEUTSCH"), 0.9),
-      (transl("AUTHOR_OF"), 0.3),
-      (transl("THE_FABRIC_OF_REALITY"), 0.6),
+      (t("THE"), 0.8),
+      (t("BEGINNING"), 1.0),
+      (t("OF"), 0.8),
+      (t("INFINITY"), 1.0),
+      (t("EXPLANATIONS THAT TRANSFORM THE WORLD"), 0.3),
+      (t("DAVID DEUTSCH"), 0.9),
+      (t("AUTHOR OF"), 0.3),
+      (t("THE FABRIC OF REALITY"), 0.6),
     ),
     cover-fonts,
   )
@@ -33,9 +31,9 @@
 #{
   import "page2.typ": title-page
   title-page(
-    author: transl("DAVID_DEUTSCH"),
-    title: transl("THE_BEGINNING_OF_INFINITY"),
-    subtitle: transl("EXPLANATIONS_THAT_TRANSFORM_THE_WORLD"),
+    author: t("DAVID DEUTSCH"),
+    title: t("The Beginning of Infinity"),
+    subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
     publisher: "VIKING",
     lang: current-lang,
     fonts: title-fonts,
@@ -49,7 +47,7 @@
 #{
   import "page4.typ": half-title-page
   half-title-page(
-    title: transl("THE_BEGINNING_OF_INFINITY"),
+    title: t("The Beginning of Infinity"),
     logo-width: 2.2cm,
     lang: current-lang,
     fonts: title-fonts,
@@ -61,9 +59,9 @@
 #{
   import "page6.typ": title-page
   title-page(
-    author: transl("DAVID_DEUTSCH"),
-    title: transl("THE_BEGINNING_OF_INFINITY"),
-    subtitle: transl("EXPLANATIONS_THAT_TRANSFORM_THE_WORLD"),
+    author: t("DAVID DEUTSCH"),
+    title: t("The Beginning of Infinity"),
+    subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
     publisher: "VIKING",
     lang: current-lang,
     fonts: title-fonts,
@@ -80,7 +78,7 @@
   set par(leading: 0.45em)
 
   align(center)[
-    #read("page7-1.md").split("\n").join([\ ])
+    str-to-lines(#read("page7-1.md"))
   ]
 
   v(1.5em) // Spacing between the top block and the bottom disclaimer
@@ -113,31 +111,68 @@
 
 #pagebreak()
 
-// Markdown chapters imported via cmarker
+
+// ==========================================
+// Front Matter Page Settings (Roman numerals)
+// ==========================================
+#set page(
+  numbering: "i",
+  number-align: center + bottom,
+)
+// If you want Acknowledgements to explicitly be page "vi":
+#counter(page).update(6)
+
+// Style unnumbered Level-1 headings (Acknowledgements, Introduction)
+#show heading.where(level: 1): it => {
+  if it.numbering == none {
+    // Generous breathing room from the top
+    v(15%)
+    align(center)[
+      #text(size: 1.4em, weight: "regular", style: "italic")[#it.body]
+    ]
+    // Space between title and body text
+    v(3.5em)
+  } else {
+    // Keep normal layout for numbered chapters (1. The Reach...)
+    it
+  }
+}
+
+// Justify paragraph text and set paragraph spacing
+#set par(
+  justify: true,
+  leading: 0.75em, // line spacing
+  spacing: 1.5em, // blank space between paragraphs
+)
+
+// ==========================================
+// Acknowledgements Page
+// ==========================================
+
+
+#heading(numbering: none, outlined: true)[t("Acknowledgements")]
+#cmarker.render(read("Acknowledgements.md"))
+#pagebreak()
+#heading(numbering: none, outlined: true)[t("Introduction")]
+#cmarker.render(read("Introduction.md"))
+#pagebreak()
+
 #let render-md = {
   file => cmarker.render(
     read(file),
     scope: (
-      image: image,
+      image: (path, ..args) => image(path, ..args),
     ),
   )
 }
 
-// Unnumbered front matter (automatically italicized by outrageous)
-#heading(numbering: none, outlined: true)[Acknowledgements]
-#render-md("Acknowledgements.md")
-#pagebreak()
-#heading(numbering: none, outlined: true)[Introduction]
-#render-md("Introduction.md")
-#pagebreak()
-
 // Chapters (numbered 1., 2., ...)
 #set heading(numbering: "1.")
-= The Reach of Explanations
-#render-md("1. The Reach of Explanations.md")
+= t("The Reach of Explanations")
+// #render-md("1. The Reach of Explanations.md")
 #pagebreak()
-= Closer to Reality
-#render-md("2. Closer to Reality.md")
+= t("Closer to Reality")
+// #render-md("2. Closer to Reality.md")
 #pagebreak()
 
 // #render-md("3. The Spark.md")
@@ -160,11 +195,4 @@
 // #render-md("Index.md")
 
 // #import "_page_306_Diagram_1.typ": pipeline-diagram
-// #pipeline-diagram(
-//   input: $X$,
-//   output: $f(X)$,
-//   step1: transl("_page_306_Diagram_1.splitting"),
-//   step2: transl("_page_306_Diagram_1.interference"),
-//   branches: ([$Y_1$], [$Y_2$]),
-//   last-branch: $Y(italic(#transl("_page_306_Diagram_1.many")))$,
-// )
+// #pipeline-diagram()

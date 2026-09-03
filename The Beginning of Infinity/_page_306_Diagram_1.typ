@@ -8,14 +8,20 @@
   #text(size: arrow-size)[#arrow]
 ]
 
+#import "i18n.typ": current-lang, load-i18n
+
+// Initialize translator for this diagram
+#let t = load-i18n("_page_14_Diagram_2.i18n.yml")
+
+#let input = $X$
+#let output = $f(X)$
+#let step1 = t("splitting")
+#let step2 = t("interference")
+#let branches = ([$Y_1$], [$Y_2$])
+#let last-branch = $Y(italic(#t("many")))$
+
 // Pipeline diagram (no default content values; keyed arguments)
 #let pipeline-diagram(
-  input: none,
-  output: none,
-  step1: none,
-  step2: none,
-  branches: (),
-  last-branch: none,
   show-dots: true,
 
   // Sizing & styling defaults
