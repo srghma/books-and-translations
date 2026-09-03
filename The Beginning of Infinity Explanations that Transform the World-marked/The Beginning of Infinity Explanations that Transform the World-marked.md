@@ -6,21 +6,7 @@
 
 **INFINITY**
 
-![](_page_0_Picture_15.jpeg)
-
-![](_page_0_Picture_16.jpeg)
-
-![](_page_0_Picture_17.jpeg)
-
-![](_page_0_Picture_18.jpeg)
-
-![](_page_0_Picture_19.jpeg)
-
-![](_page_0_Picture_20.jpeg)
-
-![](_page_0_Picture_21.jpeg)
-
-![](_page_0_Picture_22.jpeg)
+![](page_000001_7bd4b17144abe628f736807cd0479caec5f0fa6c48f802391f34c00238e8aa9e.png)
 
 **EXPLANATIONS THAT TRANSFORM THE WORLD**
 
@@ -37,13 +23,9 @@ The Beginning of Infinity
 
 VIKING
 
-![](_page_2_Picture_1.jpeg)
-
 ### The Beginning of Infinity
 
 ![](_page_3_Picture_1.jpeg)
-
-![](_page_4_Picture_1.jpeg)
 
 DAVID DEUTSCH
 
