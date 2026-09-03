@@ -1,8 +1,9 @@
 #import "@preview/cetz:0.5.2"
+#import cetz.draw: line, content, group, rotate
 #import "i18n.typ": current-lang, load-i18n
 
 // Initialize translator for this diagram
-#let t = load-i18n("_page_167_Diagram_1.i18n.yml")
+#let t = load-i18n("_page_177_Figure_4.i18n.yml")
 
 #let label-top = t("The set of all natural numbers")
 #let label-bot = t("Part of that set")
@@ -17,7 +18,6 @@
   scale: 1.0,
   stroke-base: 0.7pt,
 ) = {
-  import cetz.draw: *
   let len = y-top - y-bot
   if len <= 0 { return }
 
@@ -49,8 +49,6 @@
   rate: 0.082,
   count: 45,
 ) = {
-  import cetz.draw: *
-
   let dist = x-vanish - x-start
 
   for k in range(count) {
@@ -105,7 +103,6 @@
   rate: 0.082,
   k-start: 40,
 ) = {
-  import cetz.draw: *
   let sc-start = 1.0 / (1.0 + rate * k-start)
 
   // Subtle convergence envelope lines meeting at the horizon tip
@@ -122,7 +119,6 @@
 // Reusable 4: Perspective Text Label
 // ==========================================
 #let draw-label(pos, body, angle: 2.2deg) = {
-  import cetz.draw: *
   group({
     rotate(angle, origin: pos)
     content(pos, [
