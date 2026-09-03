@@ -1,0 +1,15 @@
+"Step 1 (takes 1 second)":
+  km: "ជំហានទី ១ (ចំណាយពេល ១ វិនាទី)"
+  de: "Schritt 1 (dauert 1 Sekunde)"
+
+"Step 2 (takes ½ of a second)":
+  km: "ជំហានទី ២ (ចំណាយពេល ½ វិនាទី)"
+  de: "Schritt 2 (dauert ½ Sekunde)"
+
+"Step 3 (takes ¼ of a second)":
+  km: "ជំហានទី ៣ (ចំណាយពេល ¼ វិនាទី)"
+  de: "Schritt 3 (dauert ¼ Sekunde)"
+
+"Room":
+  km: "បន្ទប់"
+  de: "Zimmer"

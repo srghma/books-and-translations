@@ -2,25 +2,21 @@
   "base-serif": [
     "EB Garamond",
     "Libertinus Serif",
-    "Times New Roman",
-    "serif"
+    "Times New Roman"
   ],
   "base-sans": [
     "Trebuchet MS",
     "Impact",
     "Liberation Sans",
-    "Arial",
-    "sans-serif"
+    "Arial"
   ],
   "lang-to-fonts-map": {
     "km": {
       "serif": [
-        "Noto Serif Khmer",
-        "Khmer OS"
+        "Noto Serif Khmer"
       ],
       "sans": [
-        "Noto Sans Khmer",
-        "Khmer OS"
+        "Noto Sans Khmer"
       ]
     },
     "ja": {
