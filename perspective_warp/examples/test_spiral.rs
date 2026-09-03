@@ -17,11 +17,16 @@ fn main() {
         "gap": 6.5,
         "theta_offset_deg": -70.0,
         "tilt_deg": -10.0,
+        "black_color": "#16181b",
+        "gray_color": "#8b9097",
+        "spoke_color": "#686d75",
+        "axis_color": "rgba(130, 135, 142, 0.6)",
+        "draw_axis": true,
         "stroke_base": 2.4,
     });
 
     let config_bytes = serde_json::to_vec(&config).unwrap();
-    let svg_bytes = perspective_warp::render_gene_spiral_internal(&config_bytes).unwrap();
+    let svg_bytes = perspective_warp::render_gene_spiral(&config_bytes).unwrap();
     let out_svg = "/tmp/test_spiral.svg";
     fs::write(out_svg, &svg_bytes).unwrap();
     println!("Wrote {out_svg}");

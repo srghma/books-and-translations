@@ -14,7 +14,7 @@
   num-turns: 60,
   rate: 0.0042,
   pitch: 26.0,
-  gap:11,
+  gap:21,
   theta-offset-deg: -70.0,
   tilt-deg: -10.0,
   black-color: "#16181b",
