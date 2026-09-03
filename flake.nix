@@ -28,6 +28,9 @@
             uv
             just
             git
+            typst
+            typstyle
+            pandoc
           ] ++ runtimeLibs;
 
           shellHook = ''

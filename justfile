@@ -24,6 +24,12 @@ delete-unreferenced-images *ARGS: *(delete-unreferenced-dir *list_of_dirs ARGS)
 delete-unreferenced-images-dry-run *ARGS:
     just delete-unreferenced-images --dry-run {{ARGS}}
 
+# Convert markdown files to Typst (.typ) across all directories in list_of_dirs (pass -c to also compile PDF)
+convert-to-typst *ARGS: *(convert-to-typst-dir *list_of_dirs ARGS)
+
+# Format all Typst (.typ) files across all directories in list_of_dirs using typstyle
+format-typst *ARGS: *(format-typst-dir *list_of_dirs ARGS)
+
 # Deduplicate similar images for a specific book directory
 deduplicate-dir dir *ARGS:
     uv run ./deduplicate_similar_images.py {{ARGS}} "{{dir}}"
@@ -31,3 +37,11 @@ deduplicate-dir dir *ARGS:
 # Delete unreferenced images for a specific book directory
 delete-unreferenced-dir dir *ARGS:
     uv run ./delete_unreferenced_images.py {{ARGS}} "{{dir}}"
+
+# Convert markdown files to Typst for a specific book directory
+convert-to-typst-dir dir *ARGS:
+    ./convert_markdown_to_typst.py {{ARGS}} "{{dir}}"
+
+# Format all Typst files for a specific book directory using typstyle
+format-typst-dir dir *ARGS:
+    typstyle -i "{{dir}}"/*.typ {{ARGS}}
