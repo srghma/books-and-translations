@@ -19,7 +19,6 @@ pub struct GeneSpiralConfig {
     pub nodes_per_turn: usize,
     pub num_turns: usize,
     pub rate: f32,
-    pub pitch: f32,
     pub gap: f32,
     pub theta_offset_deg: f32,
     pub tilt_deg: f32,
@@ -35,29 +34,6 @@ pub struct GeneSpiralConfig {
 // Spiral Rendering
 // ============================================================================
 
-struct SpiralNode {
-    pt: (f32, f32),
-    depth: f32,
-    scale: f32,
-    center: (f32, f32),
-}
-
-struct SpiralSegment {
-    p1: (f32, f32),
-    p2: (f32, f32),
-    mid_depth: f32,
-    scale: f32,
-    color: String,
-}
-
-struct SpiralSpoke {
-    center: (f32, f32),
-    node: (f32, f32),
-    depth: f32,
-    scale: f32,
-    dot_color: String,
-}
-
 pub fn render(config_bytes: &[u8]) -> Result<Vec<u8>, String> {
     let config: GeneSpiralConfig =
         serde_json::from_slice(config_bytes).map_err(|e| format!("Invalid JSON config: {e}"))?;
@@ -68,12 +44,10 @@ pub fn render(config_bytes: &[u8]) -> Result<Vec<u8>, String> {
     let cos_tilt = tilt_rad.cos();
     let sin_tilt = tilt_rad.sin();
 
-    let step_u = config.pitch / n_nodes as f32;
-    let gap = if config.gap > 0.0 {
-        config.gap
-    } else {
-        step_u * 2.0
-    };
+    // `gap` controls the distance between one black repetition and the next black repetition.
+    // Grey is always in the middle between two repetitions of black (gap * 0.5).
+    let step_u = config.gap / n_nodes as f32;
+    let gray_offset = config.gap * 0.5;
 
     let camera = PerspectiveCamera::new(
         config.start_x,
@@ -83,8 +57,16 @@ pub fn render(config_bytes: &[u8]) -> Result<Vec<u8>, String> {
         config.rate,
     );
 
-    // 3D point projected to 2D
-    let get_projected_point = |u: f32, theta: f32| -> ((f32, f32), f32) {
+    let axis_dx = config.vanish_x - config.start_x;
+    let axis_dy = config.vanish_y - config.start_y;
+    let axis_len = (axis_dx * axis_dx + axis_dy * axis_dy).sqrt().max(1e-4);
+    let ux = axis_dx / axis_len;
+    let uy = axis_dy / axis_len;
+
+    // 3D point projected to 2D screen coordinates, returning ((px, py), z, d_par)
+    // Points tilted along the receding axis (d_par > 0) are in the back.
+    // Points tilted towards the viewer (d_par <= 0) are in the front.
+    let get_projected_point = |u: f32, theta: f32| -> ((f32, f32), f32, f32) {
         let s = camera.scale(u);
         let (cx, cy) = camera.axis_point(u);
         let cos_t = theta.cos();
@@ -96,8 +78,11 @@ pub fn render(config_bytes: &[u8]) -> Result<Vec<u8>, String> {
         let dx = (dx_raw * cos_tilt - dy_raw * sin_tilt) * s;
         let dy = (dx_raw * sin_tilt + dy_raw * cos_tilt) * s;
 
-        let depth = cos_t;
-        ((cx + dx, cy + dy), depth)
+        let px = cx + dx;
+        let py = cy + dy;
+        let d_par = (dx * ux + dy * uy) / s;
+        let z = u + (dx * ux + dy * uy);
+        ((px, py), z, d_par)
     };
 
     let mut svg = String::with_capacity(64 * 1024);
@@ -125,170 +110,185 @@ pub fn render(config_bytes: &[u8]) -> Result<Vec<u8>, String> {
         );
     }
 
-    // Build nodes for Spiral A (Black) and Spiral B (Gray), with aligned theta angles
-    let mut nodes_a: Vec<SpiralNode> = Vec::with_capacity(512);
-    let mut nodes_b: Vec<SpiralNode> = Vec::with_capacity(512);
+    enum DrawableKind {
+        Spoke {
+            center: (f32, f32),
+            node: (f32, f32),
+            is_front: bool,
+            dot_color: String,
+            scale: f32,
+        },
+        Segment {
+            p1: (f32, f32),
+            p2: (f32, f32),
+            is_front: bool,
+            color: String,
+            scale: f32,
+        },
+        ApexLine {
+            p1: (f32, f32),
+            p2: (f32, f32),
+            color: String,
+            scale: f32,
+        },
+    }
 
-    let mut m = 0;
-    while m < 10000 {
-        let theta = theta_0 + m as f32 * theta_step;
+    struct Drawable {
+        z: f32,
+        kind: DrawableKind,
+    }
 
-        // Spiral A: at u_a
-        let u_a = m as f32 * step_u;
-        let s_a = camera.scale(u_a);
-        let (cx_a, _) = camera.axis_point(u_a);
+    let mut drawables: Vec<Drawable> = Vec::with_capacity(2048);
 
-        if cx_a >= config.vanish_x - 1.0 || s_a < 0.012 {
-            break;
+    // Helper to generate spokes and segments for a spiral
+    let mut add_spiral = |offset_u: f32, color: &str| {
+        let mut m = 0;
+        let mut last_node: Option<((f32, f32), f32, f32)> = None;
+
+        while m < 10000 {
+            let u = m as f32 * step_u + offset_u;
+            let theta = theta_0 + m as f32 * theta_step;
+            let s = camera.scale(u);
+            let (cx, _) = camera.axis_point(u);
+
+            if cx >= config.vanish_x - 1.0 || s < 0.012 {
+                break;
+            }
+
+            let (pt, z, d_par) = get_projected_point(u, theta);
+            let center = camera.axis_point(u);
+            let is_front = d_par <= 0.0;
+
+            // Add spoke
+            drawables.push(Drawable {
+                z,
+                kind: DrawableKind::Spoke {
+                    center,
+                    node: pt,
+                    is_front,
+                    dot_color: color.to_string(),
+                    scale: s,
+                },
+            });
+
+            // Add segment connecting previous node
+            let u_next = (m + 1) as f32 * step_u + offset_u;
+            let theta_next = theta_0 + (m + 1) as f32 * theta_step;
+            let (pt_next, z_next, d_par_next) = get_projected_point(u_next, theta_next);
+            let s_next = camera.scale(u_next);
+
+            let seg_z = (z + z_next) * 0.5;
+            let seg_is_front = ((d_par + d_par_next) * 0.5) <= 0.0;
+
+            drawables.push(Drawable {
+                z: seg_z,
+                kind: DrawableKind::Segment {
+                    p1: pt,
+                    p2: pt_next,
+                    is_front: seg_is_front,
+                    color: color.to_string(),
+                    scale: (s + s_next) * 0.5,
+                },
+            });
+
+            last_node = Some((pt, z, s));
+            m += 1;
         }
 
-        let (pt_a, depth_a) = get_projected_point(u_a, theta);
-        let c_a = camera.axis_point(u_a);
-        nodes_a.push(SpiralNode {
-            pt: pt_a,
-            depth: depth_a,
-            scale: s_a,
-            center: c_a,
-        });
-
-        // Spiral B: shifted by gap along axis, aligned in theta
-        let u_b = u_a + gap;
-        let s_b = camera.scale(u_b);
-        let (cx_b, _) = camera.axis_point(u_b);
-
-        if cx_b < config.vanish_x - 1.0 && s_b >= 0.012 {
-            let (pt_b, depth_b) = get_projected_point(u_b, theta);
-            let c_b = camera.axis_point(u_b);
-            nodes_b.push(SpiralNode {
-                pt: pt_b,
-                depth: depth_b,
-                scale: s_b,
-                center: c_b,
+        if let Some((pt, z, s)) = last_node {
+            drawables.push(Drawable {
+                z: z + 100.0, // Furthest away, drawn earliest
+                kind: DrawableKind::ApexLine {
+                    p1: pt,
+                    p2: (config.vanish_x, config.vanish_y),
+                    color: color.to_string(),
+                    scale: s,
+                },
             });
         }
+    };
 
-        m += 1;
-    }
+    add_spiral(0.0, &config.black_color);
+    add_spiral(gray_offset, &config.gray_color);
 
-    let mut segments: Vec<SpiralSegment> = Vec::with_capacity(nodes_a.len() + nodes_b.len());
-    let mut spokes: Vec<SpiralSpoke> = Vec::with_capacity(nodes_a.len() + nodes_b.len());
+    // Sort all drawables by depth Z in descending order:
+    // Furthest away (largest Z) is rendered first; nearest (smallest Z) is rendered on top.
+    drawables.sort_by(|a, b| b.z.partial_cmp(&a.z).unwrap_or(std::cmp::Ordering::Equal));
 
-    // Segments and spokes for Spiral A (Black)
-    for i in 0..nodes_a.len() {
-        let n = &nodes_a[i];
-        spokes.push(SpiralSpoke {
-            center: n.center,
-            node: n.pt,
-            depth: n.depth,
-            scale: n.scale,
-            dot_color: config.black_color.clone(),
-        });
-
-        if i + 1 < nodes_a.len() {
-            let next = &nodes_a[i + 1];
-            segments.push(SpiralSegment {
-                p1: n.pt,
-                p2: next.pt,
-                mid_depth: (n.depth + next.depth) * 0.5,
-                scale: (n.scale + next.scale) * 0.5,
-                color: config.black_color.clone(),
-            });
+    for d in drawables {
+        match d.kind {
+            DrawableKind::Spoke {
+                center,
+                node,
+                is_front,
+                dot_color,
+                scale,
+            } => {
+                if !is_front {
+                    let sw = (0.75 * scale).clamp(0.2, 0.85);
+                    let dash1 = (1.2 * scale).clamp(0.5, 1.5);
+                    let dash2 = (1.8 * scale).clamp(0.8, 2.2);
+                    let _ = writeln!(
+                        svg,
+                        r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-dasharray="{:.2},{:.2}" stroke-linecap="round"/>"#,
+                        center.0, center.1, node.0, node.1, config.spoke_color, sw, dash1, dash2
+                    );
+                } else {
+                    let sw = (0.95 * scale).clamp(0.25, 1.05);
+                    let dash1 = (1.4 * scale).clamp(0.6, 1.8);
+                    let dash2 = (2.0 * scale).clamp(0.9, 2.5);
+                    let dot_r = (1.6 * scale).clamp(0.5, 1.75);
+                    let _ = writeln!(
+                        svg,
+                        r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-dasharray="{:.2},{:.2}" stroke-linecap="round"/>"#,
+                        center.0, center.1, node.0, node.1, config.spoke_color, sw, dash1, dash2
+                    );
+                    let _ = writeln!(
+                        svg,
+                        r#"    <circle cx="{:.2}" cy="{:.2}" r="{:.2}" fill="{}"/>"#,
+                        node.0, node.1, dot_r, dot_color
+                    );
+                }
+            }
+            DrawableKind::Segment {
+                p1,
+                p2,
+                is_front,
+                color,
+                scale,
+            } => {
+                if !is_front {
+                    let sw =
+                        (config.stroke_base * 0.65 * scale).clamp(0.35, config.stroke_base * 0.7);
+                    let _ = writeln!(
+                        svg,
+                        r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round" stroke-linejoin="round"/>"#,
+                        p1.0, p1.1, p2.0, p2.1, color, sw
+                    );
+                } else {
+                    let sw =
+                        (config.stroke_base * 1.15 * scale).clamp(0.45, config.stroke_base * 1.3);
+                    let _ = writeln!(
+                        svg,
+                        r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round" stroke-linejoin="round"/>"#,
+                        p1.0, p1.1, p2.0, p2.1, color, sw
+                    );
+                }
+            }
+            DrawableKind::ApexLine {
+                p1,
+                p2,
+                color,
+                scale,
+            } => {
+                let sw = (config.stroke_base * 0.7 * scale).clamp(0.25, 0.5);
+                let _ = writeln!(
+                    svg,
+                    r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round"/>"#,
+                    p1.0, p1.1, p2.0, p2.1, color, sw
+                );
+            }
         }
-    }
-
-    // Segments and spokes for Spiral B (Gray)
-    for i in 0..nodes_b.len() {
-        let n = &nodes_b[i];
-        spokes.push(SpiralSpoke {
-            center: n.center,
-            node: n.pt,
-            depth: n.depth,
-            scale: n.scale,
-            dot_color: config.gray_color.clone(),
-        });
-
-        if i + 1 < nodes_b.len() {
-            let next = &nodes_b[i + 1];
-            segments.push(SpiralSegment {
-                p1: n.pt,
-                p2: next.pt,
-                mid_depth: (n.depth + next.depth) * 0.5,
-                scale: (n.scale + next.scale) * 0.5,
-                color: config.gray_color.clone(),
-            });
-        }
-    }
-
-    // 2. Render Back Layer (depth < 0)
-    // 2a. Back spokes
-    for sp in spokes.iter().filter(|s| s.depth < 0.0) {
-        let sw = (0.75 * sp.scale).clamp(0.2, 0.85);
-        let dash1 = (1.2 * sp.scale).clamp(0.5, 1.5);
-        let dash2 = (1.8 * sp.scale).clamp(0.8, 2.2);
-        let _ = writeln!(
-            svg,
-            r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-dasharray="{:.2},{:.2}" stroke-linecap="round"/>"#,
-            sp.center.0, sp.center.1, sp.node.0, sp.node.1, config.spoke_color, sw, dash1, dash2
-        );
-    }
-
-    // 2b. Back spiral segments
-    for seg in segments.iter().filter(|s| s.mid_depth < 0.0) {
-        let sw = (config.stroke_base * 0.65 * seg.scale).clamp(0.35, config.stroke_base * 0.7);
-        let _ = writeln!(
-            svg,
-            r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round" stroke-linejoin="round"/>"#,
-            seg.p1.0, seg.p1.1, seg.p2.0, seg.p2.1, seg.color, sw
-        );
-    }
-
-    // 3. Render Front Layer (depth >= 0)
-    // 3a. Front spokes
-    for sp in spokes.iter().filter(|s| s.depth >= 0.0) {
-        let sw = (0.95 * sp.scale).clamp(0.25, 1.05);
-        let dash1 = (1.4 * sp.scale).clamp(0.6, 1.8);
-        let dash2 = (2.0 * sp.scale).clamp(0.9, 2.5);
-        let _ = writeln!(
-            svg,
-            r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-dasharray="{:.2},{:.2}" stroke-linecap="round"/>"#,
-            sp.center.0, sp.center.1, sp.node.0, sp.node.1, config.spoke_color, sw, dash1, dash2
-        );
-    }
-
-    // 3b. Node dots at front vertices
-    for sp in spokes.iter().filter(|s| s.depth >= 0.0) {
-        let dot_r = (1.6 * sp.scale).clamp(0.5, 1.75);
-        let _ = writeln!(
-            svg,
-            r#"    <circle cx="{:.2}" cy="{:.2}" r="{:.2}" fill="{}"/>"#,
-            sp.node.0, sp.node.1, dot_r, sp.dot_color
-        );
-    }
-
-    // 3c. Front spiral segments (thick, prominent)
-    for seg in segments.iter().filter(|s| s.mid_depth >= 0.0) {
-        let sw = (config.stroke_base * 1.15 * seg.scale).clamp(0.45, config.stroke_base * 1.3);
-        let _ = writeln!(
-            svg,
-            r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round" stroke-linejoin="round"/>"#,
-            seg.p1.0, seg.p1.1, seg.p2.0, seg.p2.1, seg.color, sw
-        );
-    }
-
-    // 4. Connect final nodes to the vanishing point apex
-    if let (Some(last_a), Some(last_b)) = (nodes_a.last(), nodes_b.last()) {
-        let sw_a = (config.stroke_base * 0.7 * last_a.scale).clamp(0.25, 0.5);
-        let sw_b = (config.stroke_base * 0.7 * last_b.scale).clamp(0.25, 0.5);
-        let _ = writeln!(
-            svg,
-            r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round"/>"#,
-            last_a.pt.0, last_a.pt.1, config.vanish_x, config.vanish_y, config.black_color, sw_a
-        );
-        let _ = writeln!(
-            svg,
-            r#"    <line x1="{:.2}" y1="{:.2}" x2="{:.2}" y2="{:.2}" stroke="{}" stroke-width="{:.2}" stroke-linecap="round"/>"#,
-            last_b.pt.0, last_b.pt.1, config.vanish_x, config.vanish_y, config.gray_color, sw_b
-        );
     }
 
     let _ = writeln!(svg, "  </g>\n</svg>");
