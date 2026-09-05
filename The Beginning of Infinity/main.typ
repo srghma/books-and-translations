@@ -138,7 +138,7 @@
 
     // Chapter Number
     align(center)[
-      #text(size: 13pt)[#counter(heading).display("I")]
+      #text(size: 13pt)[#counter(heading).display("1")]
     ]
 
     v(0.6em)
@@ -229,6 +229,17 @@
   #body
 ]
 
+#let dialogue(attrs, body) = [
+  #v(0.8em)
+  #pad(x: 1.8em)[
+    #set text(size: 9.5pt)
+    #set par(hanging-indent: 1.8em, first-line-indent: 0pt, leading: 0.65em, spacing: 0.85em)
+    #show regex("^[a-zA-Z ]+:"): it => text(tracking: 0.04em)[#smallcaps(lower(it.text))]
+    #body
+  ]
+  #v(0.8em)
+]
+
 #let render-md(file, images: (:)) = {
   let content = read(file)
   cmarker.render(
@@ -263,6 +274,8 @@
       terminology: terminology,
       meanings: meanings,
       summary: summary,
+      dialogue: dialogue,
+      dialog: dialogue,
     ),
   )
 }
