@@ -154,6 +154,7 @@
 #let cover-page(
   items,
   fonts,
+  gap-factor: 0.85,
 ) = {
   page(
     fill: bg,
@@ -239,23 +240,24 @@
         // 2. Compute dynamic gaps so that the first block touches the top margin
         //    and the last block touches the bottom margin
         let total-blocks-h = valid-blocks.map(it => it.h).sum()
-        let available-space = calc.max(0pt, h - total-blocks-h)
+        let available-space = calc.max(0pt, h - total-blocks-h) * gap-factor
 
         let gap-weights = valid-blocks.slice(0, -1).map(it => it.gap-weight)
         let total-weight = gap-weights.sum()
         if total-weight == 0 { total-weight = 1.0 }
 
-        // 3. Render blocks in flow; gaps are placed between the outer boundaries
-        align(center + top)[
-          #for (i, block-item) in valid-blocks.enumerate() {
-            block-item.content
+        // 3. Render blocks using stack so gaps are strictly controlled without extra paragraph spacing
+        let stack-children = ()
+        for (i, block-item) in valid-blocks.enumerate() {
+          stack-children.push(block-item.content)
 
-            if i < num-blocks - 1 {
-              let this-gap = available-space * (gap-weights.at(i) / total-weight)
-              v(this-gap)
-            }
+          if i < num-blocks - 1 {
+            let this-gap = available-space * (gap-weights.at(i) / total-weight)
+            stack-children.push(v(this-gap))
           }
-        ]
+        }
+
+        align(center + top, stack(dir: ttb, ..stack-children))
       }
     })
   ]

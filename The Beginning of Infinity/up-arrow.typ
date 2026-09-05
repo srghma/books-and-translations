@@ -1,5 +1,5 @@
 #let up-arrow(
-  height: 1.5em,
+  height: 1.1em,
   width: auto,
   head-percent: 70%, // % of total height occupied by the arrow head
   stem-width-percent: 30%, // % of total width occupied by the stem

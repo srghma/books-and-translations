@@ -1,8 +1,8 @@
 #import "@preview/cmarker:0.1.10"
 
-#import "i18n.typ": (
-  current-lang, fonts-for-current-lang, load-i18n, str-to-lines,
-)
+#import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n, str-to-lines
+#import "sun-symbol.typ": sun-symbol
+#import "up-arrow.typ": up-arrow
 
 #let t = load-i18n("main.i18n.yml")
 
@@ -263,7 +263,10 @@
 )
 
 #let render-md(file, images: (:)) = {
-  let content = read(file)
+  let content = read(file).replace(
+    regex("<([a-zA-Z0-9_-]+)([^>]*?)\s*/>"),
+    m => "<" + m.captures.at(0) + m.captures.at(1) + "></" + m.captures.at(0) + ">",
+  )
   cmarker.render(
     content,
     scope: (
@@ -299,6 +302,13 @@
       dialogue: dialogue,
       dialog: dialogue,
       chapter: chapter-ref,
+      "sun-symbol": (attrs, body) => sun-symbol(),
+      "up-arrow": (attrs, body) => up-arrow(),
+      treason: (attrs, body) => box(
+        height: 1.5em,
+        baseline: 20%,
+        image("treason.svg", height: 1.5em),
+      ),
     ),
   )
 }
