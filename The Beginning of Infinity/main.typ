@@ -1,6 +1,8 @@
 #import "@preview/cmarker:0.1.10"
 
-#import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n, str-to-lines
+#import "i18n.typ": (
+  current-lang, fonts-for-current-lang, load-i18n, str-to-lines,
+)
 
 #let t = load-i18n("main.i18n.yml")
 
@@ -197,7 +199,12 @@
     #v(1.2em)
   ]
   #set text(size: 9.5pt)
-  #set par(hanging-indent: 1.8em, first-line-indent: 0pt, leading: 0.65em, spacing: 0.9em)
+  #set par(
+    hanging-indent: 1.8em,
+    first-line-indent: 0pt,
+    leading: 0.65em,
+    spacing: 0.9em,
+  )
   #show emph: it => [#it #h(0.5em)]
   #body
 ]
@@ -206,7 +213,10 @@
   #v(2.5em)
   #block(width: 100%, sticky: true)[
     #align(center)[
-      #text(size: 8.5pt, tracking: 0.08em)[#smallcaps[Meanings of 'The Beginning of Infinity'\ Encountered in This Chapter]]
+      #text(
+        size: 8.5pt,
+        tracking: 0.08em,
+      )[#smallcaps[Meanings of 'The Beginning of Infinity'\ Encountered in This Chapter]]
     ]
     #v(1.2em)
   ]
@@ -233,12 +243,24 @@
   #v(0.8em)
   #pad(x: 1.8em)[
     #set text(size: 9.5pt)
-    #set par(hanging-indent: 1.8em, first-line-indent: 0pt, leading: 0.65em, spacing: 0.85em)
-    #show regex("^[a-zA-Z ]+:"): it => text(tracking: 0.04em)[#smallcaps(lower(it.text))]
+    #set par(
+      hanging-indent: 1.8em,
+      first-line-indent: 0pt,
+      leading: 0.65em,
+      spacing: 0.85em,
+    )
+    #show regex("^[a-zA-Z ]+:"): it => text(tracking: 0.04em)[#smallcaps(lower(
+      it.text,
+    ))]
     #body
   ]
   #v(0.8em)
 ]
+
+#let chapter-ref(attrs, body) = link(
+  label("chapter-" + str(attrs.to)),
+  [#t("Chapter") #attrs.to],
+)
 
 #let render-md(file, images: (:)) = {
   let content = read(file)
@@ -276,16 +298,26 @@
       summary: summary,
       dialogue: dialogue,
       dialog: dialogue,
+      chapter: chapter-ref,
     ),
   )
 }
+
+#let render-chapter(num, title, images: (:)) = [
+  #heading(level: 1, t(title)) #label("chapter-" + str(num))
+  #render-md(str(num) + ". " + title + ".md", images: images)
+  #pagebreak()
+]
 
 // Chapters (numbered 1., 2., ...)
 #set heading(numbering: "1.")
 #set page(
   paper: "a5",
   margin: (x: 2.2cm, top: 3cm, bottom: 2.5cm),
-  footer: context align(center)[#text(size: 9.5pt, font: "Libertinus Serif")[#counter(page).display()]],
+  footer: context align(center)[#text(
+    size: 9.5pt,
+    font: "Libertinus Serif",
+  )[#counter(page).display()]],
   numbering: "1",
 )
 
@@ -303,60 +335,50 @@
   first-line-indent: 1.5em,
 )
 
-= #t("The Reach of Explanations")
-#render-md(
-  "1. The Reach of Explanations.md",
+#render-chapter(
+  1,
+  "The Reach of Explanations",
   images: (
     _page_14_Diagram_2: include "_page_14_Diagram_2.typ",
     _page_34_Picture_2: image("_page_34_Picture_2.jpeg"),
   ),
 )
-#pagebreak()
 
-= #t("Closer to Reality")
-#render-md(
-  "2. Closer to Reality.md",
+#render-chapter(
+  2,
+  "Closer to Reality",
   images: (
     _page_44_Picture_5: image("_page_44_Picture_5.jpeg"),
     _page_48_Picture_4: image("_page_48_Picture_4.jpeg"),
   ),
 )
-#pagebreak()
 
-= #t("The Spark")
-#render-md(
-  "3. The Spark.md",
+#render-chapter(
+  3,
+  "The Spark",
   images: (
     _page_74_Picture_4: include "_page_74_Picture_4.typ",
     _page_75_Picture_2: include "_page_75_Picture_2.typ",
   ),
 )
-#pagebreak()
 
-= #t("Creation")
-#render-md(
-  "4. Creation.md",
+#render-chapter(
+  4,
+  "Creation",
   images: (
     _page_110_Diagram_2: include "_page_110_Diagram_2.typ",
   ),
 )
-#pagebreak()
 
-= #t("The Reality of Abstractions")
-#render-md("5. The Reality of Abstractions.md")
-#pagebreak()
+#render-chapter(5, "The Reality of Abstractions")
 
-= #t("The Jump to Universality")
-#render-md("6. The Jump to Universality.md")
-#pagebreak()
+#render-chapter(6, "The Jump to Universality")
 
-= #t("Artificial Creativity")
-#render-md("7. Artificial Creativity.md")
-#pagebreak()
+#render-chapter(7, "Artificial Creativity")
 
-= #t("A Window on Infinity")
-#render-md(
-  "8. A Window on Infinity.md",
+#render-chapter(
+  8,
+  "A Window on Infinity",
   images: (
     _page_177_Figure_4: include "_page_177_Figure_4.typ",
     _page_178_Picture_2: image("_page_178_Picture_2.jpeg"),
@@ -365,19 +387,14 @@
     _page_184_Diagram_5: image("_page_184_Diagram_5.jpeg"),
   ),
 )
-#pagebreak()
 
-= #t("Optimism")
-#render-md("9. Optimism.md")
-#pagebreak()
+#render-chapter(9, "Optimism")
 
-= #t("A Dream of Socrates")
-#render-md("10. A Dream of Socrates.md")
-#pagebreak()
+#render-chapter(10, "A Dream of Socrates")
 
-= #t("The Multiverse")
-#render-md(
-  "11. The Multiverse.md",
+#render-chapter(
+  11,
+  "The Multiverse",
   images: (
     _page_295_Diagram_1: include "_page_295_Diagram_1.typ",
     _page_296_Picture_1: include "_page_296_Picture_1.typ",
@@ -386,54 +403,42 @@
     _page_306_Diagram_1: include "_page_306_Diagram_1.typ",
   ),
 )
-#pagebreak()
 
-= #t("A Physicist’s History of Bad Philosophy")
-#render-md("12. A Physicist’s History of Bad Philosophy.md")
-#pagebreak()
+#render-chapter(12, "A Physicist’s History of Bad Philosophy")
 
-= #t("Choices")
-#render-md("13. Choices.md")
-#pagebreak()
+#render-chapter(13, "Choices")
 
-= #t("Why are Flowers Beautiful?")
-#render-md(
-  "14. Why are Flowers Beautiful?.md",
+#render-chapter(
+  14,
+  "Why are Flowers Beautiful?",
   images: (
     _page_367_Picture_1: image("_page_367_Picture_1.jpeg"),
     _page_367_Picture_3: image("_page_367_Picture_3.jpeg"),
     _page_370_Picture_1: image("_page_370_Picture_1.jpeg"),
   ),
 )
-#pagebreak()
 
-= #t("The Evolution of Culture")
-#render-md(
-  "15. The Evolution of Culture.md",
+#render-chapter(
+  15,
+  "The Evolution of Culture",
   images: (
     _page_386_Diagram_2: include "_page_386_Diagram_2.typ",
     _page_387_Diagram_1: include "_page_387_Diagram_1.typ",
   ),
 )
-#pagebreak()
 
-= #t("The Evolution of Creativity")
-#render-md("16. The Evolution of Creativity.md")
-#pagebreak()
+#render-chapter(16, "The Evolution of Creativity")
 
-= #t("Unsustainable")
-#render-md(
-  "17. Unsustainable.md",
+#render-chapter(
+  17,
+  "Unsustainable",
   images: (
     _page_430_Picture_3: image("_page_430_Picture_3.jpeg"),
     _page_436_Picture_1: image("_page_436_Picture_1.jpeg"),
   ),
 )
-#pagebreak()
 
-= #t("The Beginning")
-#render-md("18. The Beginning.md")
-#pagebreak()
+#render-chapter(18, "The Beginning")
 
 // #render-md("Bibliography.md")
 // #render-md("Index.md")
