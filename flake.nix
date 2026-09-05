@@ -31,6 +31,7 @@
             typst
             typstyle
             pandoc
+            prettier
             fontconfig
           ] ++ runtimeLibs;
 

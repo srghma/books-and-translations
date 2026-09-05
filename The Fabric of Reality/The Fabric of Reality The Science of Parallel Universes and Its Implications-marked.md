@@ -27,11 +27,11 @@ of **reality**
 
 How much can our deepest theories of the world explain? For David Deutsch, a young physicist of unusual originality, quantum theory contains our most fundamental knowledge of the physical world. Taken literally, it implies that there are many universes “parallel” to the one we see around us. This multiplicity of universes, according to Deutsch, turns out to be the key to achieving a new world view—one which synthesizes the theories of evolution, computation, and knowledge with quantum physics. Considered jointly, these four strands of explanation reveal a unified fabric of reality that is objective and comprehensible, and the subject of this daring and challenging book.
 
-*The Fabric of Reality* explains and connects many topics at the leading edge of current research and thinking, from quantum computers to time travel and from the physical limits of virtual reality to the ultimate fate of the universe. Here, for scientist and lay person alike, for philosopher, science-fiction reader, biologist, and computer expert, is a startling synthesis of disciplines and a new optimistic message about existence.
+_The Fabric of Reality_ explains and connects many topics at the leading edge of current research and thinking, from quantum computers to time travel and from the physical limits of virtual reality to the ultimate fate of the universe. Here, for scientist and lay person alike, for philosopher, science-fiction reader, biologist, and computer expert, is a startling synthesis of disciplines and a new optimistic message about existence.
 
 “A tremendously exciting book. Deutsch argues that we are much closer to A Theory of Everything than we realize.”
 
-—Douglas Adams, author of *The Hitchhiker's Guide to the Galaxy*
+—Douglas Adams, author of _The Hitchhiker's Guide to the Galaxy_
 
 Cover design by Martin Ogolter Cover illustration by Eric Rodenbeck
 
@@ -99,7 +99,7 @@ Dedicated to the memory of Karl Popper, Hugh Everett and Alan Turing, and to Ric
 ## Contents
 
 |     | Preface Acknowledgements                   | ix x   |
-|-----|--------------------------------------------|--------|
+| --- | ------------------------------------------ | ------ |
 | 1   | The Theory of Everything                   | 1      |
 | 2.  | Shadows                                    | 32.    |
 | 3   | Problem-solving                            | 55     |
@@ -221,13 +221,13 @@ I must stress immediately that I am not referring merely to the 'theory of every
 
 tain all the information necessary to predict everything that can be predicted (Figure 1.1).
 
-But prediction is not explanation. The hoped-for 'theory of everything', even if combined with a theory of the initial state, will at best provide only a tiny facet of a real Theory of Everything. It may *predict* everything (in principle). But it cannot be expected to *explain* much more than existing theories do, except for a few phenomena that are dominated by the nuances of subatomic interactions, such as collisions inside particle accelerators, and the exotic history of particle transmutations in the Big Bang. What motivates the use of the term 'theory of everything' for such a narrow, albeit fascinating, piece of knowledge? It is, I think, another mistaken view of the nature of science, held disapprovingly by many critics of science and (alas) approvingly by many scientists, namely that science is essentially *reductionist*. That is to say, science allegedly explains things reductively – by analysing them into components. For example, the resistance of a wall to being penetrated or knocked down is explained by regarding the wall as a vast aggregation of interacting molecules. The properties of those molecules are themselves explained in terms of their constituent atoms, and the interactions of these atoms with one another, and so on down to the smallest particles and most basic forces. Reductionists think that all scientific explanations, and perhaps all sufficiently deep explanations of any kind, take that form.
+But prediction is not explanation. The hoped-for 'theory of everything', even if combined with a theory of the initial state, will at best provide only a tiny facet of a real Theory of Everything. It may _predict_ everything (in principle). But it cannot be expected to _explain_ much more than existing theories do, except for a few phenomena that are dominated by the nuances of subatomic interactions, such as collisions inside particle accelerators, and the exotic history of particle transmutations in the Big Bang. What motivates the use of the term 'theory of everything' for such a narrow, albeit fascinating, piece of knowledge? It is, I think, another mistaken view of the nature of science, held disapprovingly by many critics of science and (alas) approvingly by many scientists, namely that science is essentially _reductionist_. That is to say, science allegedly explains things reductively – by analysing them into components. For example, the resistance of a wall to being penetrated or knocked down is explained by regarding the wall as a vast aggregation of interacting molecules. The properties of those molecules are themselves explained in terms of their constituent atoms, and the interactions of these atoms with one another, and so on down to the smallest particles and most basic forces. Reductionists think that all scientific explanations, and perhaps all sufficiently deep explanations of any kind, take that form.
 
 The reductionist conception leads naturally to a classification of
 
 ![](_page_30_Diagram_11.jpeg)
 
-FIGURE 1.1 *An inadequate conception of the 'theory of everything'.*
+FIGURE 1.1 _An inadequate conception of the 'theory of everything'._
 
 ubjects and theories in a hierarchy, according to how close they are to the 'lowest-level' predictive theories that are known. In this hierarchy, logic and mathematics form the immovable bedrock on which the edifice of science is built. The foundation stone would be a reductive 'theory of everything', a universal theory of particles, forces, space and time, together with some theory of what the initial state of the universe was. The rest of physics forms the first few storeys. Astrophysics and chemistry are at a higher level, geology even higher, and so on. The edifice branches into many towers of increasingly high-level subjects like biochemistry, biology and genetics. Perched at the tottering, stratospheric tops are subjects like the theory of evolution, economics, psychology and computer science, which in this picture are almost inconceivably derivative.
 
@@ -804,7 +804,7 @@ I define the repertoire of a virtual-reality generator as the set of real or ima
 Virtual reality always involves the creation of artificial senseimpressions - image generation - so let us begin there. What
 
 | log i ca ll y possible experiences |                                |
-|------------------------------------|--------------------------------|
+| ---------------------------------- | ------------------------------ |
 | e.g. Piloting an ai rcraft.        |                                |
 | e.g. Being proud of one's          |                                |
 | pi l otin g a bil iti e s          |                                |
@@ -2447,7 +2447,7 @@ Consider this typical statement referring to free will: 'After careful thought I
 Thus Turing's conception of computation seems less disconnected from human values, and is no obstacle to the understanding of human attributes like free will, provided it is understood in a multiverse context. The same example exonerates Everett's theory itself. On the face of it, the price of understanding interference phenomena is to create or exacerbate many philosophical problems. But here, and in many other examples I have given in this book, we see that the very opposite is the case. The fruitfulness of the multiverse theory in contributing to the solution of long-standing philosophical problems is so great that it would be worth adopting even if there were no physical evidence for it at all. Indeed, the
 
 |                                    |               | After careful thought some copies of me. including the one speaking. chose to do | J X                             |
-|------------------------------------|---------------|----------------------------------------------------------------------------------|---------------------------------|
+| ---------------------------------- | ------------- | -------------------------------------------------------------------------------- | ------------------------------- |
 | After careful thought              | I chose to do | X                                                                                |                                 |
 | I could have chosen otherwise      |               | Other copies of me chose otherwise                                               |                                 |
 | It was the right decision          |               | Representations of the moral or aesthetic                                        |                                 |
@@ -2714,7 +2714,7 @@ grandfather paradox 293, 319
 
 grass-cure theory 7, 66, 79
 
-*Gravitation and Cosmology*  
+_Gravitation and Cosmology_  
 (Weinberg) 4
 
 gravity 13, 18, 151, 154–7, 159, 168

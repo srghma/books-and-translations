@@ -39,12 +39,12 @@ Illustration on page 426: © Bettmann/Corbis
 LIBRARY OF CONGRESS CATALOGING IN PUBLICATION DATA
 
 Deutsch, David.
- The beginning of infinity : explanations that transform the world / David Deutsch.
- p. cm.
+The beginning of infinity : explanations that transform the world / David Deutsch.
+p. cm.
 Includes bibliographical references and index.
 ISBN: 978-1-101-54944-5
 
 1. Explanation. 2. Infinite. 3. Science—Philosophy. I. Title.
-Q175.32.E97D48 2011
-501—dc22
-2011004120
+   Q175.32.E97D48 2011
+   501—dc22
+   2011004120

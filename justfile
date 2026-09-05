@@ -37,6 +37,13 @@ convert-to-typst *ARGS:*(convert-to-typst-dir *list_of_dirs ARGS)
 
 format-typst *ARGS:*(format-typst-dir *list_of_dirs ARGS)
 
+# Format all markdown (.md) files recursively using prettier
+
+format-md *ARGS:
+    prettier --write "**/*.md" {{ARGS}}
+
+alias format-markdown := format-md
+
 # Deduplicate similar images for a specific book directory
 
 deduplicate-dir dir *ARGS:

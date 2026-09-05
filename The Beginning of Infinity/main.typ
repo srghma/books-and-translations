@@ -190,7 +190,20 @@
   cmarker.render(
     content,
     scope: (
-      image: (path, ..args) => images.at(path),
+      image: (path, ..args) => {
+        let img = images.at(path, default: none)
+        let content-item = if img != none { img } else { image(path) }
+        let alt = args.named().at("alt", default: none)
+        if alt != none and alt != "" {
+          align(center)[
+            #content-item
+            #v(0.6em)
+            #text(size: 9pt)[#alt]
+          ]
+        } else {
+          align(center)[#content-item]
+        }
+      },
     ),
     html: (
       epigraph: epigraph,
