@@ -152,131 +152,151 @@
 #cmarker.render(read("Introduction.md"))
 #pagebreak()
 
-#let typ-diagrams = (
-  "_page_14_Diagram_2",
-  "_page_74_Picture_4",
-  "_page_75_Picture_2",
-  "_page_110_Diagram_2",
-  "_page_177_Figure_4",
-  "_page_180_Figure_1",
-  "_page_183_Figure_2",
-  "_page_295_Diagram_1",
-  "_page_296_Picture_1",
-  "_page_298_Picture_5",
-  "_page_298_Picture_7",
-  "_page_306_Diagram_1",
-  "_page_386_Diagram_2",
-  "_page_387_Diagram_1",
-)
-
-#let image-aliases = (
-  "_page_178_Picture_2.svg": "_page_178_Picture_2.jpeg",
-  "_page_184_Diagram_5.svg": "_page_184_Diagram_5.jpeg",
-)
-
-#let render-image(path, ..args) = {
-  if path == "" or path == none {
-    return []
-  }
-  if path.ends-with(".typ") {
-    include path
-  } else {
-    let stem = path.replace(regex("\.[a-zA-Z0-9]+$"), "")
-    if stem in typ-diagrams {
-      include stem + ".typ"
-    } else {
-      let resolved-path = image-aliases.at(path, default: path)
-      image(resolved-path, ..args)
-    }
-  }
-}
-
-#let render-md = {
-  file => {
-    let content = read(file)
-    // Strip leading chapter heading from markdown if present (e.g. "# 3 The Spark" or "### Closer to Reality")
-    content = content.replace(regex("^\s*#{1,3}\s*(<span[^>]*></span>)?\s*(\d+\s+)?.*?\n"), "")
-    cmarker.render(
-      content,
-      scope: (
-        image: (path, ..args) => render-image(path, ..args),
-      ),
-    )
-  }
+#let render-md(file, images: (:)) = {
+  let content = read(file)
+  cmarker.render(
+    content,
+    scope: (
+      image: (path, ..args) => images.at(path),
+    ),
+  )
 }
 
 // Chapters (numbered 1., 2., ...)
 #set heading(numbering: "1.")
+#set page(
+  numbering: "1",
+)
 
-= t("The Reach of Explanations")
-#render-md("1. The Reach of Explanations.md")
+= #t("The Reach of Explanations")
+#render-md(
+  "1. The Reach of Explanations.md",
+  images: (
+    _page_14_Diagram_2: include "_page_14_Diagram_2.typ",
+    _page_34_Picture_2: image("_page_34_Picture_2.jpeg"),
+  ),
+)
 #pagebreak()
 
-= t("Closer to Reality")
-#render-md("2. Closer to Reality.md")
+= #t("Closer to Reality")
+#render-md(
+  "2. Closer to Reality.md",
+  images: (
+    _page_44_Picture_5: image("_page_44_Picture_5.jpeg"),
+    _page_48_Picture_4: image("_page_48_Picture_4.jpeg"),
+  ),
+)
 #pagebreak()
 
-= t("The Spark")
-#render-md("3. The Spark.md")
+= #t("The Spark")
+#render-md(
+  "3. The Spark.md",
+  images: (
+    _page_74_Picture_4: include "_page_74_Picture_4.typ",
+    _page_75_Picture_2: include "_page_75_Picture_2.typ",
+  ),
+)
 #pagebreak()
 
-= t("Creation")
-#render-md("4. Creation.md")
+= #t("Creation")
+#render-md(
+  "4. Creation.md",
+  images: (
+    _page_110_Diagram_2: include "_page_110_Diagram_2.typ",
+  ),
+)
 #pagebreak()
 
-= t("The Reality of Abstractions")
+= #t("The Reality of Abstractions")
 #render-md("5. The Reality of Abstractions.md")
 #pagebreak()
 
-= t("The Jump to Universality")
+= #t("The Jump to Universality")
 #render-md("6. The Jump to Universality.md")
 #pagebreak()
 
-= t("Artificial Creativity")
+= #t("Artificial Creativity")
 #render-md("7. Artificial Creativity.md")
 #pagebreak()
 
-= t("A Window on Infinity")
-#render-md("8. A Window on Infinity.md")
+= #t("A Window on Infinity")
+#render-md(
+  "8. A Window on Infinity.md",
+  images: (
+    _page_177_Figure_4: include "_page_177_Figure_4.typ",
+    _page_178_Picture_2: image("_page_178_Picture_2.jpeg"),
+    _page_180_Figure_1: include "_page_180_Figure_1.typ",
+    _page_183_Figure_2: include "_page_183_Figure_2.typ",
+    _page_184_Diagram_5: image("_page_184_Diagram_5.jpeg"),
+  ),
+)
 #pagebreak()
 
-= t("Optimism")
+= #t("Optimism")
 #render-md("9. Optimism.md")
 #pagebreak()
 
-= t("A Dream of Socrates")
+= #t("A Dream of Socrates")
 #render-md("10. A Dream of Socrates.md")
 #pagebreak()
 
-= t("The Multiverse")
-#render-md("11. The Multiverse.md")
+= #t("The Multiverse")
+#render-md(
+  "11. The Multiverse.md",
+  images: (
+    _page_295_Diagram_1: include "_page_295_Diagram_1.typ",
+    _page_296_Picture_1: include "_page_296_Picture_1.typ",
+    _page_298_Picture_5: include "_page_298_Picture_5.typ",
+    _page_298_Picture_7: include "_page_298_Picture_7.typ",
+    _page_306_Diagram_1: include "_page_306_Diagram_1.typ",
+  ),
+)
 #pagebreak()
 
-= t("A Physicist’s History of Bad Philosophy")
+= #t("A Physicist’s History of Bad Philosophy")
 #render-md("12. A Physicist’s History of Bad Philosophy.md")
 #pagebreak()
 
-= t("Choices")
+= #t("Choices")
 #render-md("13. Choices.md")
 #pagebreak()
 
-= t("Why are Flowers Beautiful?")
-#render-md("14. Why are Flowers Beautiful?.md")
+= #t("Why are Flowers Beautiful?")
+#render-md(
+  "14. Why are Flowers Beautiful?.md",
+  images: (
+    _page_367_Picture_1: image("_page_367_Picture_1.jpeg"),
+    _page_367_Picture_3: image("_page_367_Picture_3.jpeg"),
+    _page_370_Picture_1: image("_page_370_Picture_1.jpeg"),
+  ),
+)
 #pagebreak()
 
-= t("The Evolution of Culture")
-#render-md("15. The Evolution of Culture.md")
+= #t("The Evolution of Culture")
+#render-md(
+  "15. The Evolution of Culture.md",
+  images: (
+    _page_386_Diagram_2: include "_page_386_Diagram_2.typ",
+    _page_387_Diagram_1: include "_page_387_Diagram_1.typ",
+  ),
+)
 #pagebreak()
 
-= t("The Evolution of Creativity")
+= #t("The Evolution of Creativity")
 #render-md("16. The Evolution of Creativity.md")
 #pagebreak()
 
-= t("Unsustainable")
-#render-md("17. Unsustainable.md")
+= #t("Unsustainable")
+#render-md(
+  "17. Unsustainable.md",
+  images: (
+    _page_430_Picture_3: image("_page_430_Picture_3.jpeg"),
+    _page_436_Picture_1: image("_page_436_Picture_1.jpeg"),
+  ),
+)
 #pagebreak()
 
-= t("The Beginning")
+= #t("The Beginning")
 #render-md("18. The Beginning.md")
 #pagebreak()
 

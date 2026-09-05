@@ -66,3 +66,13 @@ split-by-contents *ARGS:
 
 generate-fonts-to-ttf-path:
     ./generate_fonts_to_ttf_path.py
+
+# Remove image extensions from markdown files
+
+remove-image-extensions *ARGS:
+    ./remove_image_extensions.py {{ARGS}}
+
+# Remove starting chapter titles from markdown files
+
+remove-starting-titles *ARGS:
+    ./remove_starting_titles.py {{ARGS}}

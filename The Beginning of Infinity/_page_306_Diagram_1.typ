@@ -10,8 +10,7 @@
 
 #import "i18n.typ": current-lang, load-i18n
 
-// Initialize translator for this diagram
-#let t = load-i18n("_page_14_Diagram_2.i18n.yml")
+#let t = load-i18n("_page_306_Diagram_1.i18n.yml")
 
 #let input = $X$
 #let output = $f(X)$
