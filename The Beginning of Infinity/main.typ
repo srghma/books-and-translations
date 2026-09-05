@@ -188,6 +188,47 @@
   align(right)[#body]
 }
 
+#let terminology(attrs, body) = [
+  #v(2.5em)
+  #block(width: 100%, sticky: true)[
+    #align(center)[
+      #text(size: 8.5pt, tracking: 0.12em)[#smallcaps[Terminology]]
+    ]
+    #v(1.2em)
+  ]
+  #set text(size: 9.5pt)
+  #set par(hanging-indent: 1.8em, first-line-indent: 0pt, leading: 0.65em, spacing: 0.9em)
+  #show emph: it => [#it #h(0.5em)]
+  #body
+]
+
+#let meanings(attrs, body) = [
+  #v(2.5em)
+  #block(width: 100%, sticky: true)[
+    #align(center)[
+      #text(size: 8.5pt, tracking: 0.08em)[#smallcaps[Meanings of 'The Beginning of Infinity'\ Encountered in This Chapter]]
+    ]
+    #v(1.2em)
+  ]
+  #set text(size: 9.5pt)
+  #set par(leading: 0.65em, spacing: 0.9em)
+  #set list(marker: [–])
+  #body
+]
+
+#let summary(attrs, body) = [
+  #v(2.5em)
+  #block(width: 100%, sticky: true)[
+    #align(center)[
+      #text(size: 8.5pt, tracking: 0.12em)[#smallcaps[Summary]]
+    ]
+    #v(1.2em)
+  ]
+  #set text(size: 9.5pt)
+  #set par(leading: 0.65em, spacing: 0.9em)
+  #body
+]
+
 #let render-md(file, images: (:)) = {
   let content = read(file)
   cmarker.render(
@@ -219,6 +260,9 @@
           body
         }
       },
+      terminology: terminology,
+      meanings: meanings,
+      summary: summary,
     ),
   )
 }
