@@ -133,6 +133,9 @@
     // Space between title and body text
     v(3.5em)
   } else {
+    // Reset footnote numbering per chapter
+    counter(footnote).update(0)
+
     // Chapter Number
     align(center)[
       #text(size: 13pt)[#counter(heading).display("I")]
@@ -197,7 +200,6 @@
         if alt != none and alt != "" {
           align(center)[
             #content-item
-            #v(0.6em)
             #text(size: 9pt)[#alt]
           ]
         } else {
@@ -208,6 +210,15 @@
     html: (
       epigraph: epigraph,
       cite: cite,
+      footnote: (attrs, body) => footnote(body),
+      fn: (attrs, body) => footnote(body),
+      span: (attrs, body) => {
+        if "explanation" in attrs {
+          [#body#footnote(attrs.explanation)]
+        } else {
+          body
+        }
+      },
     ),
   )
 }
