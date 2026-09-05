@@ -21,6 +21,7 @@
   font-style: "italic",
   font-weight: "regular",
   letter-spacing: 0.5pt,
+  text-color: auto,
 
   // Arrow styling
   color: rgb("#a4a9af"),
@@ -42,6 +43,20 @@
   let label-val = if "text" in sink.named() { sink.named().at("text") } else { label }
   let pos-ratio = if "label-pos" in sink.named() { sink.named().at("label-pos") } else { text-position }
   let f-size-val = if "label-size" in sink.named() { sink.named().at("label-size") } else { font-size }
+  let l-spacing-val = if "tracking" in sink.named() {
+    sink.named().at("tracking")
+  } else if "spacing" in sink.named() {
+    sink.named().at("spacing")
+  } else {
+    letter-spacing
+  }
+  let actual-text-color = if "text-color" in sink.named() {
+    sink.named().at("text-color")
+  } else if text-color != auto {
+    text-color
+  } else {
+    color
+  }
 
   let to-pt(v) = if type(v) == length { v / 1pt } else { float(v) }
 
@@ -52,7 +67,7 @@
   let b = to-pt(bend)
   let t-offset = to-pt(text-offset)
   let f-size = to-pt(f-size-val)
-  let l-spacing = to-pt(letter-spacing)
+  let l-spacing = to-pt(l-spacing-val)
 
   let dx = ex - sx
   let dy = ey - sy
@@ -149,15 +164,18 @@
 
     let chars = label-str.clusters()
     let widths = chars.map(c => {
-      measure(
-        std.text(
-          font: font,
-          size: f-size * 1pt,
-          style: font-style,
-          weight: font-weight,
-          c,
-        )
-      ).width / 1pt
+      (
+        measure(
+          std.text(
+            font: font,
+            size: f-size * 1pt,
+            style: font-style,
+            weight: font-weight,
+            c,
+          ),
+        ).width
+          / 1pt
+      )
     })
 
     let total-text-w = widths.fold(0.0, (a, b) => a + b) + calc.max(0, chars.len() - 1) * l-spacing
@@ -215,7 +233,7 @@
               size: f-size * 1pt,
               style: font-style,
               weight: font-weight,
-              fill: color,
+              fill: actual-text-color,
               ch,
             ),
           )
@@ -270,3 +288,5 @@
 //     overlay: true,
 //   )
 // ]
+
+// TODO: maybe better https://github.com/cetz-package/cetz/issues/395#issuecomment-2201321936
