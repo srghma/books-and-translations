@@ -43,56 +43,60 @@
 }
 
 #let render-gene-spiral(
-  width: 266.0,
-  height: 210.0,
-  start-x: 35.0,
-  start-y: 118.0,
-  vanish-x: 245.0,
-  vanish-y: 55.0,
-  radius-x: 52.0,
-  radius-y: 68.0,
-  nodes-per-turn: 8,
-  num-turns: 60,
-  rate: 0.0042,
-  gap: 21.0,
-  theta-offset-deg: -70.0,
-  tilt-deg: -10.0,
-  black-color: "#16181b",
-  gray-color: "#8b9097",
-  spoke-color: "#686d75",
-  axis-color: "rgba(130, 135, 142, 0.6)",
-  draw-axis: true,
-  stroke-base: 2.4,
-  output-width: 100%,
+  start-x: none,
+  start-y: none,
+  vanish-x: none,
+  vanish-y: none,
+  radius: none,
+  gap-btw-turns: none,
+  nodes-per-turn: none,
+  thickness-of-non-warped-spiral: none,
+  thickness-of-non-warped-axis: none,
+  color: none,
+  axis-color: none,
+  draw-axis: none,
+  color2: none,
+  crossover-lines-color: none,
+  output-width: none,
 ) = {
+  let to-num(v) = if type(v) == std.length { v / 1pt } else { float(v) }
+
   let config = bytes(
     json.encode((
-      width: width,
-      height: height,
-      start_x: start-x,
-      start_y: start-y,
-      vanish_x: vanish-x,
-      vanish_y: vanish-y,
-      radius_x: radius-x,
-      radius_y: radius-y,
+      start_x: to-num(start-x),
+      start_y: to-num(start-y),
+      vanish_x: to-num(vanish-x),
+      vanish_y: to-num(vanish-y),
+      radius: to-num(radius),
+      gap_btw_turns: to-num(gap-btw-turns),
       nodes_per_turn: nodes-per-turn,
-      num_turns: num-turns,
-      rate: rate,
-      gap: gap,
-      theta_offset_deg: theta-offset-deg,
-      tilt_deg: tilt-deg,
-      black_color: black-color,
-      gray_color: gray-color,
-      spoke_color: spoke-color,
+      thickness_of_non_warped_spiral: to-num(thickness-of-non-warped-spiral),
+      thickness_of_non_warped_axis: to-num(thickness-of-non-warped-axis),
+      color: color,
       axis_color: axis-color,
       draw_axis: draw-axis,
-      stroke_base: stroke-base,
+      color2: color2,
+      crossover_lines_color: crossover-lines-color,
     )),
   )
 
   let svg-bytes = warp-plugin.render_gene_spiral(config)
-  align(center)[
-    #image(svg-bytes, format: "svg", width: output-width)
-  ]
+  let s = str(svg-bytes)
+  let m-w = s.match(regex("width=\"([0-9.]+)\""))
+  let m-h = s.match(regex("height=\"([0-9.]+)\""))
+  let orig-w = float(m-w.captures.at(0))
+  let orig-h = float(m-h.captures.at(0))
+
+  let img-width = if output-width == auto {
+    to-num(vanish-x) * 1pt
+  } else if output-width != none {
+    output-width
+  } else {
+    orig-w * 1pt
+  }
+  let img-height = (to-num(img-width) / orig-w) * orig-h * 1pt
+
+  let img-args = (format: "svg", width: img-width, height: img-height)
+  image(svg-bytes, ..img-args)
 }
 

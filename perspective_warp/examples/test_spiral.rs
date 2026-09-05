@@ -2,26 +2,20 @@ use std::fs;
 
 fn main() {
     let config = serde_json::json!({
-        "width": 266.0,
-        "height": 210.0,
         "start_x": 35.0,
-        "start_y": 118.0,
+        "start_y": 105.0,
         "vanish_x": 245.0,
-        "vanish_y": 55.0,
-        "radius_x": 52.0,
-        "radius_y": 68.0,
+        "vanish_y": 105.0,
+        "radius": 68.0,
+        "gap_btw_turns": 25.0,
         "nodes_per_turn": 8,
-        "num_turns": 60,
-        "rate": 0.0042,
-        "gap": 21.0,
-        "theta_offset_deg": -70.0,
-        "tilt_deg": -10.0,
-        "black_color": "#16181b",
-        "gray_color": "#8b9097",
-        "spoke_color": "#686d75",
+        "thickness_of_non_warped_spiral": 2.4,
+        "thickness_of_non_warped_axis": 0.8,
+        "color": "#16181b",
         "axis_color": "rgba(130, 135, 142, 0.6)",
         "draw_axis": true,
-        "stroke_base": 2.4,
+        "color2": "#8b9097",
+        "crossover_lines_color": "#686d75",
     });
 
     let config_bytes = serde_json::to_vec(&config).unwrap();

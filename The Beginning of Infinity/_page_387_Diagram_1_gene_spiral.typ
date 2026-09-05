@@ -2,56 +2,78 @@
 
 /// Renders the 3D perspective infinite gene spiral converging towards a vanishing point
 #let infinite-gene-spiral(
-  width: 266pt,
-  height: 210pt,
-  start-x: 35.0,
-  start-y: 118.0,
-  vanish-x: 245.0,
-  vanish-y: 55.0,
-  radius-x: 52.0,
-  radius-y: 68.0,
-  nodes-per-turn: 8,
-  num-turns: 60,
-  rate: 0.0042,
-  gap: 50.0,
-  theta-offset-deg: -70.0,
-  tilt-deg: -10.0,
-  black-color: "#16181b",
-  gray-color: "#8b9097",
-  spoke-color: "#686d75",
-  axis-color: "rgba(130, 135, 142, 0.6)",
-  draw-axis: true,
-  stroke-base: 2.4,
-  v-padding: 1.5em,
+  start-x: none,
+  start-y: none,
+  vanish-x: none,
+  vanish-y: none,
+
+  radius: none,
+  gap-btw-turns: none,
+  nodes-per-turn: none,
+
+  thickness-of-non-warped-spiral: none,
+  thickness-of-non-warped-axis: none,
+
+  color: none,
+  axis-color: none,
+  draw-axis: none,
+  color2: none,
+  crossover-lines-color: none,
+  output-width: none,
+  v-padding: none,
 ) = {
-  align(center)[
-    #block(inset: (y: v-padding))[
-      #render-gene-spiral(
-        width: width / 1pt,
-        height: height / 1pt,
-        start-x: start-x,
-        start-y: start-y,
-        vanish-x: vanish-x,
-        vanish-y: vanish-y,
-        radius-x: radius-x,
-        radius-y: radius-y,
-        nodes-per-turn: nodes-per-turn,
-        num-turns: num-turns,
-        rate: rate,
-        gap: gap,
-        theta-offset-deg: theta-offset-deg,
-        tilt-deg: tilt-deg,
-        black-color: black-color,
-        gray-color: gray-color,
-        spoke-color: spoke-color,
-        axis-color: axis-color,
-        draw-axis: draw-axis,
-        stroke-base: stroke-base,
-        output-width: width,
-      )
-    ]
-  ]
+  let content = render-gene-spiral(
+    start-x: start-x,
+    start-y: start-y,
+    vanish-x: vanish-x,
+    vanish-y: vanish-y,
+    radius: radius,
+    gap-btw-turns: gap-btw-turns,
+    nodes-per-turn: nodes-per-turn,
+    thickness-of-non-warped-spiral: thickness-of-non-warped-spiral,
+    thickness-of-non-warped-axis: thickness-of-non-warped-axis,
+    color: color,
+    axis-color: axis-color,
+    draw-axis: draw-axis,
+    color2: color2,
+    crossover-lines-color: crossover-lines-color,
+    output-width: output-width,
+  )
+  if v-padding != none {
+    block(inset: (y: v-padding), content)
+  } else {
+    content
+  }
 }
 
-// Default preview
-#infinite-gene-spiral()
+// // Default preview
+// #box(
+//   width: 155pt,
+//   height: 120pt,
+//   stroke: 0.5pt + black,
+//   clip: true,
+// )[
+//   #align(right + top)[
+//     #infinite-gene-spiral(
+//       start-x: 35pt,
+//       start-y: 105pt,
+//       vanish-x: 255pt,
+//       vanish-y: 55pt,
+
+//       radius: 68pt,
+//       gap-btw-turns: 155pt,
+//       nodes-per-turn: 12,
+
+//       thickness-of-non-warped-spiral: 3.4pt,
+//       thickness-of-non-warped-axis: 0.8pt,
+
+//       color: "#16181b",
+//       axis-color: "rgba(130, 135, 142, 0.6)",
+//       draw-axis: true,
+//       color2: "#8b9097",
+//       crossover-lines-color: "#686d75",
+//       output-width: auto,
+//       v-padding: none,
+//     )
+//   ]
+// ]
