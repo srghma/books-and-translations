@@ -1,4 +1,4 @@
-#import "i18n.typ": current-lang, load-i18n
+#import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n
 
 // Initialize translator for this diagram
 #let t = load-i18n("_page_14_Diagram_2.i18n.yml")
@@ -18,6 +18,7 @@
   v-padding: 2.2em,
 
   // Typography with Khmer & Western fallback fonts
+  font: fonts-for-current-lang.serif,
   font-size: 8.5pt,
   sub-font-size: 7.5pt,
   color: black,
