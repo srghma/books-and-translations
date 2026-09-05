@@ -1,14 +1,11 @@
-use std::collections::HashMap;
 use std::fs;
 
 fn main() {
-    let font_map_str = fs::read_to_string("../fonts-to-ttf-path.json")
-        .expect("failed to read fonts-to-ttf-path.json");
-    let font_map: HashMap<String, String> =
-        serde_json::from_str(&font_map_str).expect("failed to parse fonts-to-ttf-path.json");
-
-    let font_en = fs::read(&font_map["Times New Roman"]).expect("failed to read Times New Roman");
-    let font_km = fs::read(&font_map["Noto Serif Khmer"]).expect("failed to read Noto Serif Khmer");
+    let fonts_dir = std::path::PathBuf::from("../.fonts");
+    let font_en =
+        fs::read(fonts_dir.join("Times New Roman")).expect("failed to read Times New Roman");
+    let font_km =
+        fs::read(fonts_dir.join("Noto Serif Khmer")).expect("failed to read Noto Serif Khmer");
 
     // 1. Page 177 Fig 4 - English
     let config_fig4_en = serde_json::json!({

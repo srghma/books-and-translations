@@ -4,6 +4,11 @@
 
 #let t = load-i18n("main.i18n.yml")
 
+#set page(
+  paper: "a5",
+  margin: (x: 2.2cm, top: 3cm, bottom: 2.5cm),
+)
+
 #{
   import "cover.typ": cover-page
   cover-page(
@@ -73,7 +78,7 @@
   set par(leading: 0.45em)
 
   align(center)[
-    str-to-lines(#read("page7-1.md"))
+    #str-to-lines(read("page7-1.md"))
   ]
 
   v(1.5em) // Spacing between the top block and the bottom disclaimer
@@ -117,7 +122,7 @@
 // If you want Acknowledgements to explicitly be page "vi":
 #counter(page).update(6)
 
-// Style unnumbered Level-1 headings (Acknowledgements, Introduction)
+// Style Level-1 headings
 #show heading.where(level: 1): it => {
   if it.numbering == none {
     // Generous breathing room from the top
@@ -128,8 +133,19 @@
     // Space between title and body text
     v(3.5em)
   } else {
-    // Keep normal layout for numbered chapters (1. The Reach...)
-    it
+    // Chapter Number
+    align(center)[
+      #text(size: 13pt)[#counter(heading).display("I")]
+    ]
+
+    v(0.6em)
+
+    // Chapter Title
+    align(center)[
+      #text(size: 16pt)[#it.body]
+    ]
+
+    v(3.5em)
   }
 }
 
@@ -152,6 +168,23 @@
 #cmarker.render(read("Introduction.md"))
 #pagebreak()
 
+#let epigraph(attrs, body) = {
+  align(center)[
+    #box[
+      #set align(left)
+      #set text(size: 9.2pt)
+      #set par(leading: 0.62em, first-line-indent: 0pt, spacing: 0pt)
+      #body
+    ]
+  ]
+  v(2.8em)
+}
+
+#let cite(attrs, body) = {
+  v(0.45em)
+  align(right)[#body]
+}
+
 #let render-md(file, images: (:)) = {
   let content = read(file)
   cmarker.render(
@@ -159,13 +192,34 @@
     scope: (
       image: (path, ..args) => images.at(path),
     ),
+    html: (
+      epigraph: epigraph,
+      cite: cite,
+    ),
   )
 }
 
 // Chapters (numbered 1., 2., ...)
 #set heading(numbering: "1.")
 #set page(
+  paper: "a5",
+  margin: (x: 2.2cm, top: 3cm, bottom: 2.5cm),
+  footer: context align(center)[#text(size: 9.5pt, font: "Libertinus Serif")[#counter(page).display()]],
   numbering: "1",
+)
+
+#set text(
+  font: "Libertinus Serif",
+  size: 10pt,
+  lang: "en",
+  features: (onum: 1),
+)
+
+// Body text settings
+#set par(
+  justify: true,
+  leading: 0.68em,
+  first-line-indent: 1.5em,
 )
 
 = #t("The Reach of Explanations")

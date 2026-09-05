@@ -37,9 +37,14 @@
           shellHook = ''
             export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath runtimeLibs}:$LD_LIBRARY_PATH"
             export UV_PYTHON="${pkgs.python3}/bin/python"
-            export TYPST_ROOT="/"
-            if [ ! -f fonts-to-ttf-path.json ]; then
-              python3 ./generate_fonts_to_ttf_path.py
+
+            # We create workspace-relative symlinks in .fonts/ pointing to /nix/store fonts.
+            # Typst and Tinymist (VS Code preview) enforce a project-root sandbox and forbid
+            # reading files outside the workspace root (e.g. /nix/store/...).
+            # However, Typst follows in-tree symlinks pointing outside the sandbox.
+            # This avoids needing TYPST_ROOT="/" which breaks Tinymist preview in VS Code.
+            if [ ! -d .fonts ]; then
+              python3 ./generate_fonts.py
             fi
           '';
         };

@@ -41,8 +41,6 @@
 #let base-sans = fonts-data.at("base-sans", default: ())
 #let lang-to-fonts-map = fonts-data.at("lang-to-fonts-map", default: (:))
 
-#let fonts-to-ttf = json("../fonts-to-ttf-path.json")
-
 #let get-fonts-for-lang(lang) = {
   let lang-fonts = lang-to-fonts-map.at(str(lang), default: (:))
 
@@ -60,10 +58,8 @@
   let fonts-info = get-fonts-for-lang(lang)
   let list = fonts-info.at(style, default: ())
   for font-name in list {
-    let font-path = fonts-to-ttf.at(font-name, default: none)
-    if font-path != none {
-      return read(font-path, encoding: none)
-    }
+    let font-path = "/.fonts/" + font-name
+    return read(font-path, encoding: none)
   }
   panic("Could not find font for lang: " + str(lang))
 }

@@ -62,10 +62,10 @@ format-typst-dir dir *ARGS:
 split-by-contents *ARGS:
     ./split_markdown_by_contents.py {{ARGS}}
 
-# Regenerate fonts-to-ttf-path.json mapping font names to absolute font paths
+# Regenerate .fonts symlinks directory for fonts listed in fonts.json
 
-generate-fonts-to-ttf-path:
-    ./generate_fonts_to_ttf_path.py
+generate-fonts:
+    ./generate_fonts.py
 
 # Remove image extensions from markdown files
 

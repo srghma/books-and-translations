@@ -2,4 +2,4 @@ __pycache__/
 */*.pdf
 *-pages/
 *.wasm
-fonts-to-ttf-path.json
+.fonts/
