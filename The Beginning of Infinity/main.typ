@@ -5,6 +5,8 @@
 #import "sun-symbol.typ": sun-symbol
 #import "up-arrow.typ": up-arrow
 #import "tallies-and-roman.typ": rn, roman-fifty, roman-five-hundred, roman-one-thousand, tally
+#import "simultaneous-dialog.typ": simultaneous-dialog2
+#import "dialogue.typ": dialogue
 
 #let t = load-i18n("main.i18n.yml")
 
@@ -13,84 +15,84 @@
   margin: (x: 2.2cm, top: 3cm, bottom: 2.5cm),
 )
 
-#{
-  import "cover.typ": cover-page
-  cover-page(
-    (
-      (t("THE"), 0.8),
-      (t("BEGINNING"), 1.0),
-      (t("OF"), 0.8),
-      (t("INFINITY"), 1.0),
-      (t("EXPLANATIONS THAT TRANSFORM THE WORLD"), 0.3),
-      (t("DAVID DEUTSCH"), 0.9),
-      (t("AUTHOR OF"), 0.3),
-      (t("THE FABRIC OF REALITY"), 0.6),
-    ),
-    fonts-for-current-lang.sans,
-  )
-}
-
-#pagebreak()
-
-#{
-  import "page2.typ": title-page
-  title-page(
-    author: t("DAVID DEUTSCH"),
-    title: t("The Beginning of Infinity"),
-    subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
-    publisher: "VIKING",
-    lang: current-lang,
-    fonts: fonts-for-current-lang.serif,
-  )
-}
-
-
+// #{
+//   import "cover.typ": cover-page
+//   cover-page(
+//     (
+//       (t("THE"), 0.8),
+//       (t("BEGINNING"), 1.0),
+//       (t("OF"), 0.8),
+//       (t("INFINITY"), 1.0),
+//       (t("EXPLANATIONS THAT TRANSFORM THE WORLD"), 0.3),
+//       (t("DAVID DEUTSCH"), 0.9),
+//       (t("AUTHOR OF"), 0.3),
+//       (t("THE FABRIC OF REALITY"), 0.6),
+//     ),
+//     fonts-for-current-lang.sans,
+//   )
+// }
+//
 // #pagebreak()
-
-#pagebreak()
-#{
-  import "page4.typ": half-title-page
-  half-title-page(
-    title: t("The Beginning of Infinity"),
-    logo-width: 2.2cm,
-    lang: current-lang,
-    fonts: fonts-for-current-lang.serif,
-  )
-}
-
-#pagebreak()
-
-#{
-  import "page6.typ": title-page
-  title-page(
-    author: t("DAVID DEUTSCH"),
-    title: t("The Beginning of Infinity"),
-    subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
-    publisher: "VIKING",
-    lang: current-lang,
-    fonts: fonts-for-current-lang.serif,
-  )
-}
-
-#pagebreak()
-
-#{
-  // Adjust font size here
-  set text(size: 10pt)
-
-  // Adjust spacing between lines here (default is around 0.65em)
-  set par(leading: 0.45em)
-
-  align(center)[
-    #str-to-lines(read("page7-1.md"))
-  ]
-
-  v(1.5em) // Spacing between the top block and the bottom disclaimer
-
-  cmarker.render(read("page7-2.md"))
-}
-
-#pagebreak()
+//
+// #{
+//   import "page2.typ": title-page
+//   title-page(
+//     author: t("DAVID DEUTSCH"),
+//     title: t("The Beginning of Infinity"),
+//     subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
+//     publisher: "VIKING",
+//     lang: current-lang,
+//     fonts: fonts-for-current-lang.serif,
+//   )
+// }
+//
+//
+// // #pagebreak()
+//
+// #pagebreak()
+// #{
+//   import "page4.typ": half-title-page
+//   half-title-page(
+//     title: t("The Beginning of Infinity"),
+//     logo-width: 2.2cm,
+//     lang: current-lang,
+//     fonts: fonts-for-current-lang.serif,
+//   )
+// }
+//
+// #pagebreak()
+//
+// #{
+//   import "page6.typ": title-page
+//   title-page(
+//     author: t("DAVID DEUTSCH"),
+//     title: t("The Beginning of Infinity"),
+//     subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
+//     publisher: "VIKING",
+//     lang: current-lang,
+//     fonts: fonts-for-current-lang.serif,
+//   )
+// }
+//
+// #pagebreak()
+//
+// #{
+//   // Adjust font size here
+//   set text(size: 10pt)
+//
+//   // Adjust spacing between lines here (default is around 0.65em)
+//   set par(leading: 0.45em)
+//
+//   align(center)[
+//     #str-to-lines(read("page7-1.md"))
+//   ]
+//
+//   v(1.5em) // Spacing between the top block and the bottom disclaimer
+//
+//   cmarker.render(read("page7-2.md"))
+// }
+//
+// #pagebreak()
 
 #import "@preview/outrageous:0.4.1"
 
@@ -184,7 +186,6 @@
       #body
     ]
   ]
-  v(2.8em)
 }
 
 #let cite(attrs, body) = {
@@ -241,23 +242,6 @@
   #body
 ]
 
-#let dialogue(attrs, body) = [
-  #v(0.8em)
-  #pad(x: 1.8em)[
-    #set text(size: 9.5pt)
-    #set par(
-      hanging-indent: 1.8em,
-      first-line-indent: 0pt,
-      leading: 0.65em,
-      spacing: 0.85em,
-    )
-    #show regex("^[A-Z][a-zA-Z ]{0,20}:"): it => text(tracking: 0.04em)[#smallcaps(lower(
-      it.text,
-    ))]
-    #body
-  ]
-  #v(0.8em)
-]
 
 #let announcement(attrs, body) = [
   #v(0.8em)
@@ -326,13 +310,13 @@
       meanings: meanings,
       summary: summary,
       dialogue: dialogue,
+      "simultaneous-dialog2": simultaneous-dialog2,
       center: center-block,
       principle: center-block,
       announcement: announcement,
       instructions: announcement,
       "dotted-box": announcement,
       pre: (attrs, body) => [
-        #show regex("^[A-Z][a-zA-Z ]{0,20}:"): it => it
         #text(
           font: ("Courier New", "Liberation Mono"),
           size: 0.9em,
@@ -369,7 +353,7 @@
   #heading(
     level: 1,
     t(title),
-  ) 
+  )
   #label("chapter-" + str(num))
   #render-md(
     str(num) + ". " + title + ".md",
@@ -519,4 +503,3 @@
 
 // #import "_page_306_Diagram_1.typ": pipeline-diagram
 // #pipeline-diagram()
-
