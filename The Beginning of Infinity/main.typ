@@ -1,12 +1,20 @@
 #import "@preview/cmarker:0.1.10"
 #import "@preview/mitex:0.2.7": mitex
 
-#import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n, str-to-lines
+#import "@preview/cuti:0.4.0": show-fakeitalic, show-fakebold
+
+#import "i18n.typ": current-lang, fonts-for-current-lang, i18n-file, load-i18n, str-to-lines
 #import "sun-symbol.typ": sun-symbol
 #import "up-arrow.typ": up-arrow
 #import "tallies-and-roman.typ": rn, roman-fifty, roman-five-hundred, roman-one-thousand, tally
 #import "simultaneous-dialog.typ": simultaneous-dialog2
 #import "dialogue.typ": dialogue
+
+#show: doc => if current-lang == "km" {
+  show-fakeitalic(show-fakebold(doc))
+} else {
+  doc
+}
 
 #let t = load-i18n("main.i18n.yml")
 
@@ -82,12 +90,12 @@
   set par(leading: 0.45em)
 
   align(center)[
-    #str-to-lines(read("page7-1.md"))
+    #str-to-lines(read(i18n-file("page7-1.md")))
   ]
 
   v(1.5em) // Spacing between the top block and the bottom disclaimer
 
-  cmarker.render(read("page7-2.md"))
+  cmarker.render(read(i18n-file("page7-2.md")))
 }
 
 #pagebreak()
@@ -168,10 +176,10 @@
 
 
 #heading(numbering: none, outlined: true)[#t("Acknowledgements")]
-#cmarker.render(read("Acknowledgements.md"))
+#cmarker.render(read(i18n-file("Acknowledgements.md")))
 #pagebreak()
 #heading(numbering: none, outlined: true)[#t("Introduction")]
-#cmarker.render(read("Introduction.md"))
+#cmarker.render(read(i18n-file("Introduction.md")))
 #pagebreak()
 
 #let epigraph(attrs, body) = {
@@ -386,7 +394,7 @@
 
 #let render-md(file, images: (:), math: false) = {
   cmarker.render(
-    read(file),
+    read(i18n-file(file)),
     math: if math { mitex } else { none },
     scope: (
       image: (path, ..args) => render-image-item(

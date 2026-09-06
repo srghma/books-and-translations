@@ -2,6 +2,8 @@
 #let current-lang = sys.inputs.at("current-lang", default: "km") // Change to "km", "de", etc.
 
 #let str-to-lines(str) = {
+  // str.replace("\n", linebreak())
+  // raw(str)
   str.split("\n").join([\ ])
 }
 
@@ -28,6 +30,28 @@
     }
 
     str-to-lines(translation)
+  }
+}
+
+#let i18n-file(path) = {
+  if current-lang == "en" {
+    return path
+  }
+
+  let suffix = "-" + str(current-lang)
+  let parts = path.split(".")
+  if parts.len() > 1 {
+    let ext = parts.last()
+    let base = parts.slice(0, -1).join(".")
+    if base.ends-with(suffix) {
+      return path
+    }
+    base + suffix + "." + ext
+  } else {
+    if path.ends-with(suffix) {
+      return path
+    }
+    path + suffix
   }
 }
 
