@@ -15,84 +15,82 @@
   margin: (x: 2.2cm, top: 3cm, bottom: 2.5cm),
 )
 
-// #{
-//   import "cover.typ": cover-page
-//   cover-page(
-//     (
-//       (t("THE"), 0.8),
-//       (t("BEGINNING"), 1.0),
-//       (t("OF"), 0.8),
-//       (t("INFINITY"), 1.0),
-//       (t("EXPLANATIONS THAT TRANSFORM THE WORLD"), 0.3),
-//       (t("DAVID DEUTSCH"), 0.9),
-//       (t("AUTHOR OF"), 0.3),
-//       (t("THE FABRIC OF REALITY"), 0.6),
-//     ),
-//     fonts-for-current-lang.sans,
-//   )
-// }
-//
-// #pagebreak()
-//
-// #{
-//   import "page2.typ": title-page
-//   title-page(
-//     author: t("DAVID DEUTSCH"),
-//     title: t("The Beginning of Infinity"),
-//     subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
-//     publisher: "VIKING",
-//     lang: current-lang,
-//     fonts: fonts-for-current-lang.serif,
-//   )
-// }
-//
-//
-// // #pagebreak()
-//
-// #pagebreak()
-// #{
-//   import "page4.typ": half-title-page
-//   half-title-page(
-//     title: t("The Beginning of Infinity"),
-//     logo-width: 2.2cm,
-//     lang: current-lang,
-//     fonts: fonts-for-current-lang.serif,
-//   )
-// }
-//
-// #pagebreak()
-//
-// #{
-//   import "page6.typ": title-page
-//   title-page(
-//     author: t("DAVID DEUTSCH"),
-//     title: t("The Beginning of Infinity"),
-//     subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
-//     publisher: "VIKING",
-//     lang: current-lang,
-//     fonts: fonts-for-current-lang.serif,
-//   )
-// }
-//
-// #pagebreak()
-//
-// #{
-//   // Adjust font size here
-//   set text(size: 10pt)
-//
-//   // Adjust spacing between lines here (default is around 0.65em)
-//   set par(leading: 0.45em)
-//
-//   align(center)[
-//     #str-to-lines(read("page7-1.md"))
-//   ]
-//
-//   v(1.5em) // Spacing between the top block and the bottom disclaimer
-//
-//   cmarker.render(read("page7-2.md"))
-// }
-//
-// #pagebreak()
+#{
+  import "cover.typ": cover-page
+  cover-page(
+    (
+      (t("THE"), 0.8),
+      (t("BEGINNING"), 1.0),
+      (t("OF"), 0.8),
+      (t("INFINITY"), 1.0),
+      (t("EXPLANATIONS THAT TRANSFORM THE WORLD"), 0.3),
+      (t("DAVID DEUTSCH"), 0.9),
+      (t("AUTHOR OF"), 0.3),
+      (t("THE FABRIC OF REALITY"), 0.6),
+    ),
+    fonts-for-current-lang.sans,
+  )
+}
+
+#pagebreak()
+
+#{
+  import "page2.typ": title-page
+  title-page(
+    author: t("DAVID DEUTSCH"),
+    title: t("The Beginning of Infinity"),
+    subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
+    publisher: t("VIKING"),
+    lang: current-lang,
+    fonts: fonts-for-current-lang.serif,
+  )
+}
+
+#pagebreak()
+
+#{
+  import "page4.typ": half-title-page
+  half-title-page(
+    title: t("The Beginning of Infinity"),
+    logo-width: 2.2cm,
+    lang: current-lang,
+    fonts: fonts-for-current-lang.serif,
+  )
+}
+
+#pagebreak()
+
+#{
+  import "page6.typ": title-page
+  title-page(
+    author: t("DAVID DEUTSCH"),
+    title: t("The Beginning of Infinity"),
+    subtitle: t("EXPLANATIONS THAT TRANSFORM THE WORLD"),
+    publisher: t("VIKING"),
+    lang: current-lang,
+    fonts: fonts-for-current-lang.serif,
+  )
+}
+
+#pagebreak()
+
+#{
+  // Adjust font size here
+  set text(size: 10pt)
+
+  // Adjust spacing between lines here (default is around 0.65em)
+  set par(leading: 0.45em)
+
+  align(center)[
+    #str-to-lines(read("page7-1.md"))
+  ]
+
+  v(1.5em) // Spacing between the top block and the bottom disclaimer
+
+  cmarker.render(read("page7-2.md"))
+}
+
+#pagebreak()
 
 #import "@preview/outrageous:0.4.1"
 
@@ -110,7 +108,7 @@
     #set align(left)
     #set text(features: ("onum",)) // Old-style figures
     #outline(
-      title: align(center)[#text(style: "italic", size: 1.4em)[Contents]],
+      title: align(center)[#text(style: "italic", size: 1.4em)[#t("Contents")]],
       indent: 1.5em,
     )
   ]
@@ -218,21 +216,21 @@
   content
 }
 
-#let terminology(attrs, body) = chapter-end-section([Terminology])[
+#let terminology(attrs, body) = chapter-end-section(t("Terminology"))[
   #set par(hanging-indent: 1.8em, first-line-indent: 0pt)
   #show emph: it => [#it #h(0.5em)]
   #body
 ]
 
 #let meanings(attrs, body) = chapter-end-section(
-  [Meanings of 'The Beginning of Infinity'\ Encountered in This Chapter],
+  t("Meanings of 'The Beginning of Infinity'\nEncountered in This Chapter"),
   tracking: 0.08em,
 )[
   #set list(marker: [–])
   #body
 ]
 
-#let summary(attrs, body) = chapter-end-section([Summary], body)
+#let summary(attrs, body) = chapter-end-section(t("Summary"), body)
 
 #let announcement(attrs, body) = {
   v(0.8em)
@@ -262,20 +260,23 @@
 }
 
 #let is-ignorable-grid-child(c) = (
-  c.func() in ([ ].func(), parbreak, v) or
-  (c.func() == text and c.text.trim() == "")
+  c.func() in ([ ].func(), parbreak, v) or (c.func() == text and c.text.trim() == "")
 )
 
 #let parse-grid-length(val) = {
-  if val.ends-with("fr") { float(val.slice(0, -2)) * 1fr }
-  else if val.ends-with("%") { float(val.slice(0, -1)) * 1% }
-  else if val.ends-with("pt") { float(val.slice(0, -2)) * 1pt }
-  else if val.ends-with("em") { float(val.slice(0, -2)) * 1em }
-  else { auto }
+  if val.ends-with("fr") {
+    float(val.slice(0, -2)) * 1fr
+  } else if val.ends-with("%") {
+    float(val.slice(0, -1)) * 1%
+  } else if val.ends-with("pt") {
+    float(val.slice(0, -2)) * 1pt
+  } else if val.ends-with("em") { float(val.slice(0, -2)) * 1em } else { auto }
 }
 
 #let grid-tag(attrs, body) = {
-  let raw-children = if type(body) == content and body.has("children") { body.children } else { (body,) }
+  let raw-children = if type(body) == content and body.has("children") {
+    body.children
+  } else { (body,) }
   let items = raw-children.filter(c => not is-ignorable-grid-child(c))
 
   let cols = if "columns" in attrs {
@@ -295,7 +296,9 @@
     "horizon": horizon,
   ).at(attrs.at("align", default: "horizon"), default: horizon)
 
-  let gutter = if "gutter" in attrs { parse-grid-length(attrs.gutter) } else { 1.2em }
+  let gutter = if "gutter" in attrs { parse-grid-length(attrs.gutter) } else {
+    1.2em
+  }
   if gutter == auto { gutter = 1.2em }
 
   v(0.8em)
@@ -426,7 +429,16 @@
         #set par(first-line-indent: 0pt)
         #body
       ],
-      "br-gap": ("void", attrs => v(1.2em)),
+      // br: ("void", attrs => v(1em)),
+      "br-gap": (
+        "void",
+        attrs => {
+          let sz = if "size" in attrs { parse-grid-length(attrs.size) } else {
+            1.8em
+          }
+          v(if sz == auto { 1.8em } else { sz })
+        },
+      ),
       "sun-symbol": ("void", attrs => sun-symbol()),
       "up-arrow": ("void", attrs => up-arrow()),
       treason: ("void", attrs => treason-symbol()),
@@ -466,6 +478,37 @@
   #pagebreak()
 ]
 
+#let render-bibliography(file: "Bibliography.md") = [
+  #show heading.where(level: 1): it => {
+    // v(15%)
+    align(center)[
+      #text(size: 1.4em, weight: "regular", style: "italic")[#it.body]
+    ]
+    // v(2em, weak: true)
+  }
+  #heading(numbering: none, outlined: true)[#t("Bibliography")]
+  #{
+    set heading(numbering: none, outlined: false)
+    show heading: it => if it.level > 1 {
+      // v(1.8em, weak: true)
+      block(sticky: true)[#text(size: 10pt, weight: "regular")[#it.body]]
+      v(0.8em)
+    } else {
+      it
+    }
+    set par(
+      justify: true,
+      leading: 0.68em,
+      spacing: 0.68em,
+      first-line-indent: 0pt,
+      hanging-indent: 1.5em,
+    )
+    render-md(file)
+  }
+  // #pagebreak()
+]
+
+
 // Chapters (numbered 1., 2., ...)
 #set heading(numbering: "1.")
 #set page(
@@ -473,15 +516,15 @@
   margin: (x: 2.2cm, top: 3cm, bottom: 2.5cm),
   footer: context align(center)[#text(
     size: 9.5pt,
-    font: "Libertinus Serif",
+    font: fonts-for-current-lang.serif,
   )[#counter(page).display()]],
   numbering: "1",
 )
 
 #set text(
-  font: "Libertinus Serif",
+  font: fonts-for-current-lang.serif,
   size: 10pt,
-  lang: "en",
+  lang: current-lang,
   features: (onum: 1),
 )
 
@@ -613,6 +656,6 @@
 
 #render-chapter(18, "The Beginning")
 
-// #render-md("Bibliography.md")
-// #render-md("Index.md")
+#render-bibliography()
 
+// #render-md("Index.md")

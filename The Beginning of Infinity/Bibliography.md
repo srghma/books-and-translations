@@ -1,13 +1,68 @@
-#### Everyone should read these
+## Everyone should read these
 
-Jacob Bronowski, _The Ascent of Man_ (BBC Publications, 1973) Jacob Bronowski, _Science and Human Values_ (Harper & Row, 1956) Richard Byrne, 'Imitation as Behaviour Parsing', _Philosophical Transactions of the Royal Society_ B358 (2003) Richard Dawkins, _The Selfish Gene_ (Oxford University Press, 1976) David Deutsch, 'Comment on Michael Lockwood, "'Many Minds' Interpretations of Quantum Mechanics"', _British Journal for the Philosophy of Science_ 47, 2 (1996) David Deutsch, _The Fabric of Reality_ (Allen Lane, 1997) Karl Popper, _Conjectures and Refutations_ (Routledge, 1963) Karl Popper, _The Open Society and Its Enemies_ (Routledge, 1945)
+Jacob Bronowski, _The Ascent of Man_ (BBC Publications, 1973)
 
-#### Further reading
+Jacob Bronowski, _Science and Human Values_ (Harper & Row, 1956)
 
-John Barrow and Frank Tipler, _The Anthropic Cosmological Principle_ (Clarendon Press, 1986) Susan Blackmore, _The Meme Machine_ (Oxford University Press, 1999) Nick Bostrom, 'Are You Living in a Computer Simulation?', _Philosophical Quarterly_ 53 (2003) David Deutsch, 'Apart from Universes', in S. Saunders, J. Barrett, A. Kent and D. Wallace, eds., _Many Worlds?: Everett, Quantum Theory, and Reality_ (Oxford University Press, 2010) David Deutsch, 'It from Qubit', in John Barrow, Paul Davies and Charles Harper, eds., _Science and Ultimate Reality_ (Cambridge University Press, 2003)
+Richard Byrne, 'Imitation as Behaviour Parsing', _Philosophical Transactions of the Royal Society_ B358 (2003)
 
-David Deutsch, 'Quantum Theory of Probability and Decisions', _Pro ceedings of the Royal Society_ A455 (1999) David Deutsch, 'The Structure of the Multiverse', _Proceedings of the Royal Society_ A458 (2002) Richard Feynman, _The Character of Physical Law_ (BBC Publications, 1965) Richard Feynman, _The Meaning of It All_ (Allen Lane, 1998) Ernest Gellner, _Words and Things_ (Routledge & Kegan Paul, 1979) William Godwin, _Enquiry Concerning Political Justice_ (1793) Douglas Hofstadter, _Gödel, Escher, Bach: An Eternal Golden Braid_ (Basic Books, 1979) Douglas Hofstadter, _I am a Strange Loop_ (Basic Books, 2007) Bryan Magee, _Popper_ (Fontana, 1973) Pericles, 'Funeral Oration' Plato, _Euthyphro_ Karl Popper, _In Search of a Better World_ (Routledge, 1995) Karl Popper, _The World of Parmenides_ (Routledge, 1998) Roy Porter, _Enlightenment: Britain and the Creation of the Modern World_ (Allen Lane, 2000) Martin Rees, _Just Six Numbers_ (Basic Books, 2001) Alan Turing, 'Computing Machinery and Intelligence', _Mind_, 59, 236 (October 1950) Jenny Uglow, _The Lunar Men_ (Faber, 2002) Vernor Vinge, 'The Coming Technological Singularity', _Whole Earth Review_, winter 1993
+Richard Dawkins, _The Selfish Gene_ (Oxford University Press, 1976)
 
-![](_page_472_Picture_1)
+David Deutsch, 'Comment on Michael Lockwood, "'Many Minds' Interpretations of Quantum Mechanics"', _British Journal for the Philosophy of Science_ 47, 2 (1996)
 
-Entries in **bold** refer to defining or principal occurrences. 641 argument (Hofstadter) **115**–18, 185 _see also_ domino computer absolute zero 46, 47, 71, 295 abstractions 114–24, 166, 185, 266–7, 447 abstract replicators 95, 114, 266–7 abstraction from experience 16, 128, 129 confusions of abstract attributes with physical ones of the same name 182–8, 343 finitism and 165–6 money as an abstraction 266–7 people as abstract information 59, 130 Achilles and the tortoise 182–3 adaptation biological 52, 54–5, 56 creationism and the designers of 79–81 of creativity _see_ creativity by humans as universal constructors 58–60 and knowledge 55, 56–65, 78–81, 88; _see also_ creation of knowledge the reach of human adaptations 56–65 through technology 57–60, 61, 436; _see also_ automation Adleman, Leonard 145 Aeschylus 216 aesthetics **367** artistic values 366, 388 and attraction 357–9, 360–65 human appreciation of beauty 353–4, 356–8, 359, 362–7 the objectivity of beauty 122, 353–68 pure and applied art 365–6 _see also_ art ageing, problem of 213–14 _see also_ old age agriculture 48, 50, 57, 207, 234, 320, 422, 431, 437, 438, 440 AI _see_ artificial intelligence Alabama paradox 330–31, 333 alchemy 1, 425 algebra 36, 136, 377–8 algorithms 35, 36, 117, 295, 362 evolutionary 160 _see also_ computer programs Alhazen 220 alphabets 126–7, 144 _Amadeus_ (Shaffer) 353 ambiguity 308, 448 infinite 405, 406, 409 _see also_ equivocation analogue computers 140 analytic functions 135–6, 452 Analytical Engine 136–8, 139, 140 Andes 426–7 animal minds 154, 268, 320–21, 358–9, 407, 410 anthropic reasoning 98–104, **105**, 177–80, 452–6 anthropic principle 98 as an explanation of fine-tuning 98– 103, 177–80, 452, 453 and infinite sets 177–80 anthropocentrism 42–4, 51, 53–4, **75**, 111, 155, 446 anti-anthropocentrism 43–4, 51; _see also_ Mediocrity, Principle of in conceptions of infinity 165–6, 181
+David Deutsch, _The Fabric of Reality_ (Allen Lane, 1997)
+
+Karl Popper, _Conjectures and Refutations_ (Routledge, 1963)
+
+Karl Popper, _The Open Society and Its Enemies_ (Routledge, 1945)
+
+## Further reading
+
+John Barrow and Frank Tipler, _The Anthropic Cosmological Principle_ (Clarendon Press, 1986)
+
+Susan Blackmore, _The Meme Machine_ (Oxford University Press, 1999)
+
+Nick Bostrom, 'Are You Living in a Computer Simulation?', _Philosophical Quarterly_ 53 (2003)
+
+David Deutsch, 'Apart from Universes', in S. Saunders, J. Barrett, A. Kent and D. Wallace, eds., _Many Worlds?: Everett, Quantum Theory, and Reality_ (Oxford University Press, 2010)
+
+David Deutsch, 'It from Qubit', in John Barrow, Paul Davies and Charles Harper, eds., _Science and Ultimate Reality_ (Cambridge University Press, 2003)
+
+David Deutsch, 'Quantum Theory of Probability and Decisions',
+_Proceedings of the Royal Society_ A455 (1999)
+
+David Deutsch, 'The Structure of the Multiverse',
+_Proceedings of the Royal Society_ A458 (2002)
+
+Richard Feynman, _The Character of Physical Law_ (BBC Publications, 1965)
+
+Richard Feynman, _The Meaning of It All_ (Allen Lane, 1998)
+
+Ernest Gellner, _Words and Things_ (Routledge & Kegan Paul, 1979)
+
+William Godwin, _Enquiry Concerning Political Justice_ (1793)
+
+Douglas Hofstadter, _Gödel, Escher, Bach: An Eternal Golden Braid_ (Basic Books, 1979)
+
+Douglas Hofstadter, _I am a Strange Loop_ (Basic Books, 2007)
+
+Bryan Magee, _Popper_ (Fontana, 1973)
+
+Pericles, 'Funeral Oration'
+
+Plato, _Euthyphro_
+
+Karl Popper, _In Search of a Better World_ (Routledge, 1995)
+
+Karl Popper, _The World of Parmenides_ (Routledge, 1998)
+
+Roy Porter, _Enlightenment: Britain and the Creation of the Modern World_ (Allen Lane, 2000)
+
+Martin Rees, _Just Six Numbers_ (Basic Books, 2001)
+
+Alan Turing, 'Computing Machinery and Intelligence', _Mind_, 59, 236 (October 1950)
+
+Jenny Uglow, _The Lunar Men_ (Faber, 2002)
+
+Vernor Vinge, 'The Coming Technological Singularity',
+_Whole Earth Review_, winter 1993

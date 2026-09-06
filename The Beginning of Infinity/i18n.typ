@@ -1,5 +1,5 @@
 // Global Language Setting
-#let current-lang = sys.inputs.at("current-lang", default: "en") // Change to "km", "de", etc.
+#let current-lang = sys.inputs.at("current-lang", default: "km") // Change to "km", "de", etc.
 
 #let str-to-lines(str) = {
   str.split("\n").join([\ ])
@@ -23,12 +23,7 @@
     let translation = entry.at(current-lang, default: none)
     if translation == none {
       panic(
-        "Missing '"
-          + current-lang
-          + "' translation in "
-          + yaml-path
-          + " for key: "
-          + repr(key),
+        "Missing '" + current-lang + "' translation in " + yaml-path + " for key: " + repr(key),
       )
     }
 
