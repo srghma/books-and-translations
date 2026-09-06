@@ -83,3 +83,14 @@ remove-image-extensions *ARGS:
 
 remove-starting-titles *ARGS:
     ./remove_starting_titles.py {{ARGS}}
+
+# Translate markdown files to Khmer (.md -> -km.md) for a specific book directory
+
+translate-to-khmer-dir dir *ARGS:
+    uv run ./translate_markdown_to_khmer.py {{ARGS}} "{{dir}}"
+
+# Translate markdown files in The Beginning of Infinity to Khmer
+
+translate-infinity-to-khmer *ARGS:
+    just translate-to-khmer-dir "The Beginning of Infinity" {{ARGS}}
+

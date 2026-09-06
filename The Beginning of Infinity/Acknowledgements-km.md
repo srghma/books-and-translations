@@ -1,0 +1,3 @@
+ខ្ញុំមានអំណរគុណចំពោះមិត្តភ័ក្តិ និងសហការីរបស់ខ្ញុំ Sarah Fitz-Claridge, Alan Forrester, Herbert Freudenheim, David Johnson-Davies, Paul Tappenden និងជាពិសេស Elliot Temple និងអ្នកនិពន្ធចម្លងរបស់ខ្ញុំ Bob Davenport សម្រាប់ការអានសេចក្តីព្រាងមុននៃសៀវភៅនេះ ហើយបានស្នើឱ្យមានការកែតម្រូវ និងការកែលម្អជាច្រើន ហើយចំពោះអ្នកដែលបានអាន និងផ្តល់មតិយោបល់លើផ្នែកខ្លះទៀតគឺលោក Michael O. Golding, Alan Grafen, Ruti Regan, Simon Saunders និង Lulie Tanett ។
+
+ខ្ញុំ​ក៏​ចង់​អរគុណ​អ្នក​គំនូរ Nick Lockwood, Tommy Robin និង Lulie Tanett សម្រាប់​ការ​បក​ប្រែ​ការ​ពន្យល់​ទៅ​ជា​រូបភាព​បាន​ត្រឹមត្រូវ​ជាង​អ្វី​ដែល​ខ្ញុំ​អាច​សង្ឃឹម​បាន។
