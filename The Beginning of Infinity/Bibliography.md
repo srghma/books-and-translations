@@ -44,7 +44,7 @@ William Godwin, _Enquiry Concerning Political Justice_ (1793)
 
 Douglas Hofstadter, _Gödel, Escher, Bach: An Eternal Golden Braid_ (Basic Books, 1979)
 
-Douglas Hofstadter, _I am a Strange Loop_ (Basic Books, 2007)
+Douglas Hofstadter, _I Am a Strange Loop_ (Basic Books, 2007)
 
 Bryan Magee, _Popper_ (Fontana, 1973)
 
