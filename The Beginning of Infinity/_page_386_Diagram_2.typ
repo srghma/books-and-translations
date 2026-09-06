@@ -9,10 +9,10 @@
 /// Renders the Meme Transmission & Imitation Cycle diagram using the traced human vector figure
 #let meme-transmission-diagram(
   width: 370pt,
-  height: 205pt,
+  height: 172pt,
   human-height: 165pt,
   arrow-color: rgb("#a4a9af"),
-  v-padding: 1.5em,
+  v-padding: 0em,
 ) = {
   let serif-fonts = fonts-for-current-lang.serif
 
@@ -98,63 +98,61 @@
   ]
 
   align(center)[
-    #block(inset: (y: v-padding))[
-      #box(width: width, height: height)[
-        // 1. Incoming beam to Person 1 (dashed line with arrowhead into eye)
-        #let p1-start = (
-          32pt,
-          p1-eye.at(1) + (12pt - p1-eye.at(0)) * slope,
-        )
-        #dashed-arrow(
-          p1-start,
-          p1-eye,
-          dash: (9pt, 6pt),
-          color: arrow-color,
-          thickness: 3.2pt,
-          arrow-length: 9pt,
-          arrow-width: 7.5pt,
-          overlay: true,
-        )
+    #box(width: width, height: height)[
+      // 1. Incoming beam to Person 1 (dashed line with arrowhead into eye)
+      #let p1-start = (
+        32pt,
+        p1-eye.at(1) + (12pt - p1-eye.at(0)) * slope,
+      )
+      #dashed-arrow(
+        p1-start,
+        p1-eye,
+        dash: (9pt, 6pt),
+        color: arrow-color,
+        thickness: 3.2pt,
+        arrow-length: 9pt,
+        arrow-width: 7.5pt,
+        overlay: true,
+      )
 
-        // 2. Person 1 (left)
-        #place(top + left, dx: x1 - 10pt, dy: y1 - 7.5pt, person-unit(t("(in brain no. 1)")))
+      // 2. Person 1 (left)
+      #place(top + left, dx: x1 - 10pt, dy: y1 - 7.5pt, person-unit(t("(in brain no. 1)")))
 
-        // 3. Central observation beam: Person 1's hand -> Person 2's eye (solid arrow with labels)
-        #arrow-with-text-above-and-below(
-          p1-hand,
-          p2-eye,
-          label-above: t("Which is observed"),
-          label-below: t("and copied"),
-          font: serif-fonts,
-          font-size: 8pt,
-          font-style: "italic",
-          text-color: black,
-          color: arrow-color,
-          thickness: 3.2pt,
-          arrow-length: 9pt,
-          arrow-width: 7.5pt,
-          offset-above: 6pt,
-          offset-below: 6pt,
-          overlay: true,
-        )
+      // 3. Central observation beam: Person 1's hand -> Person 2's eye (solid arrow with labels)
+      #arrow-with-text-above-and-below(
+        p1-hand,
+        p2-eye,
+        label-above: t("Which is observed"),
+        label-below: t("and copied"),
+        font: serif-fonts,
+        font-size: 8pt,
+        font-style: "italic",
+        text-color: black,
+        color: arrow-color,
+        thickness: 3.2pt,
+        arrow-length: 9pt,
+        arrow-width: 7.5pt,
+        offset-above: 6pt,
+        offset-below: 6pt,
+        overlay: true,
+      )
 
-        // 4. Person 2 (right)
-        #place(top + left, dx: x2 - 10pt, dy: y2 - 7.5pt, person-unit(t("(in brain no. 2)")))
+      // 4. Person 2 (right)
+      #place(top + left, dx: x2 - 10pt, dy: y2 - 7.5pt, person-unit(t("(in brain no. 2)")))
 
-        // 5. Outgoing beam from Person 2 (dashed line continuing out from hand)
-        #let p2-end = (
-          width - 15pt,
-          p2-hand.at(1) + (width - 15pt - p2-hand.at(0)) * slope,
-        )
-        #dashed-line(
-          p2-hand,
-          p2-end,
-          dash: (9pt, 6pt),
-          color: arrow-color,
-          thickness: 3.2pt,
-          overlay: true,
-        )
-      ]
+      // 5. Outgoing beam from Person 2 (dashed line continuing out from hand)
+      #let p2-end = (
+        width - 15pt,
+        p2-hand.at(1) + (width - 15pt - p2-hand.at(0)) * slope,
+      )
+      #dashed-line(
+        p2-hand,
+        p2-end,
+        dash: (9pt, 6pt),
+        color: arrow-color,
+        thickness: 3.2pt,
+        overlay: true,
+      )
     ]
   ]
 }

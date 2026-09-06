@@ -107,6 +107,7 @@
 // 2. Center and narrow the TOC block
 #align(center)[
   #block(width: 75%)[
+    #set align(left)
     #set text(features: ("onum",)) // Old-style figures
     #outline(
       title: align(center)[#text(style: "italic", size: 1.4em)[Contents]],
@@ -176,74 +177,66 @@
 #pagebreak()
 
 #let epigraph(attrs, body) = {
-  align(center)[
-    #box[
-      #set align(left)
-      #set text(size: 9.2pt)
-      #set par(leading: 0.62em, first-line-indent: 0pt, spacing: 0pt)
-      #body
-    ]
+  let content = [
+    #set text(size: 9.2pt)
+    #set par(
+      justify: true,
+      leading: 0.65em,
+      spacing: 0.65em,
+      first-line-indent: (amount: 1.5em, all: true),
+    )
+    #body
   ]
+
+  if "nopad" in attrs or attrs.at("pad", default: "") == "false" {
+    content
+  } else {
+    v(0.8em)
+    pad(x: 1.8em, content)
+    v(0.8em)
+  }
 }
 
 #let cite(attrs, body) = {
   v(0.45em)
-  align(right)[#body]
+  align(right)[
+    #set par(first-line-indent: 0pt)
+    #body
+  ]
 }
 
-#let terminology(attrs, body) = [
-  #v(2.5em)
-  #block(width: 100%, sticky: true)[
+#let chapter-end-section(title, tracking: 0.12em, content) = {
+  v(2.5em)
+  block(width: 100%, sticky: true)[
     #align(center)[
-      #text(size: 8.5pt, tracking: 0.12em)[#smallcaps[Terminology]]
+      #text(size: 8.5pt, tracking: tracking)[#smallcaps[#title]]
     ]
     #v(1.2em)
   ]
-  #set text(size: 9.5pt)
-  #set par(
-    hanging-indent: 1.8em,
-    first-line-indent: 0pt,
-    leading: 0.65em,
-    spacing: 0.9em,
-  )
+  set text(size: 9.5pt)
+  set par(leading: 0.65em, spacing: 0.9em)
+  content
+}
+
+#let terminology(attrs, body) = chapter-end-section([Terminology])[
+  #set par(hanging-indent: 1.8em, first-line-indent: 0pt)
   #show emph: it => [#it #h(0.5em)]
   #body
 ]
 
-#let meanings(attrs, body) = [
-  #v(2.5em)
-  #block(width: 100%, sticky: true)[
-    #align(center)[
-      #text(
-        size: 8.5pt,
-        tracking: 0.08em,
-      )[#smallcaps[Meanings of 'The Beginning of Infinity'\ Encountered in This Chapter]]
-    ]
-    #v(1.2em)
-  ]
-  #set text(size: 9.5pt)
-  #set par(leading: 0.65em, spacing: 0.9em)
+#let meanings(attrs, body) = chapter-end-section(
+  [Meanings of 'The Beginning of Infinity'\ Encountered in This Chapter],
+  tracking: 0.08em,
+)[
   #set list(marker: [–])
   #body
 ]
 
-#let summary(attrs, body) = [
-  #v(2.5em)
-  #block(width: 100%, sticky: true)[
-    #align(center)[
-      #text(size: 8.5pt, tracking: 0.12em)[#smallcaps[Summary]]
-    ]
-    #v(1.2em)
-  ]
-  #set text(size: 9.5pt)
-  #set par(leading: 0.65em, spacing: 0.9em)
-  #body
-]
+#let summary(attrs, body) = chapter-end-section([Summary], body)
 
-
-#let announcement(attrs, body) = [
-  #v(0.8em)
-  #rect(
+#let announcement(attrs, body) = {
+  v(0.8em)
+  rect(
     width: 100%,
     stroke: (dash: "dotted", thickness: 0.75pt, paint: black),
     inset: (x: 12pt, top: 10pt, bottom: 10pt),
@@ -256,173 +249,178 @@
     )
     #body
   ]
-  #v(0.8em)
-]
+  v(0.8em)
+}
 
-#let center-block(attrs, body) = [
-  #v(0.5em)
-  #align(center)[
+#let center-block(attrs, body) = {
+  v(0.5em)
+  align(center)[
     #set par(first-line-indent: 0pt, leading: 0.65em)
     #body
   ]
-  #v(0.5em)
-]
+  v(0.5em)
+}
+
+#let is-ignorable-grid-child(c) = (
+  c.func() in ([ ].func(), parbreak, v) or
+  (c.func() == text and c.text.trim() == "")
+)
+
+#let parse-grid-length(val) = {
+  if val.ends-with("fr") { float(val.slice(0, -2)) * 1fr }
+  else if val.ends-with("%") { float(val.slice(0, -1)) * 1% }
+  else if val.ends-with("pt") { float(val.slice(0, -2)) * 1pt }
+  else if val.ends-with("em") { float(val.slice(0, -2)) * 1em }
+  else { auto }
+}
+
+#let grid-tag(attrs, body) = {
+  let raw-children = if type(body) == content and body.has("children") { body.children } else { (body,) }
+  let items = raw-children.filter(c => not is-ignorable-grid-child(c))
+
+  let cols = if "columns" in attrs {
+    attrs.columns.split(" ").filter(p => p.trim() != "").map(parse-grid-length)
+  } else if "cols" in attrs {
+    (1fr,) * int(attrs.cols)
+  } else if items.len() > 0 {
+    (1fr,) * items.len()
+  } else {
+    (1fr, 1fr)
+  }
+
+  let align-val = (
+    "top": top,
+    "bottom": bottom,
+    "center": horizon,
+    "horizon": horizon,
+  ).at(attrs.at("align", default: "horizon"), default: horizon)
+
+  let gutter = if "gutter" in attrs { parse-grid-length(attrs.gutter) } else { 1.2em }
+  if gutter == auto { gutter = 1.2em }
+
+  v(0.8em)
+  grid(columns: cols, gutter: gutter, align: align-val, ..items)
+  v(0.8em)
+}
 
 #let chapter-ref(attrs) = link(
   label("chapter-" + str(attrs.to)),
   [#t("Chapter") #attrs.to],
 )
 
-#let transporter-split() = box(baseline: 25%)[
-  #grid(
-    columns: (auto, auto, auto),
-    align: horizon,
-    gutter: 3pt,
-    table(
-      columns: 14pt,
-      rows: 14pt,
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 8pt)[$X$],
-    ),
-    text(size: 9pt)[$arrow.r$],
-    table(
-      columns: 14pt,
-      rows: (8pt, 8pt),
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 7.5pt)[$X$],
-      text(size: 7.5pt)[$Y$],
-    ),
+#let t-box(..items) = {
+  let is-single = items.pos().len() == 1
+  table(
+    columns: 14pt,
+    rows: if is-single { 14pt } else { (8pt, 8pt) },
+    align: center + horizon,
+    stroke: 0.5pt,
+    inset: 0pt,
+    ..items.pos().map(it => text(size: if is-single { 8pt } else { 7.5pt })[$#it$]),
   )
+}
+
+#let transporter-diagram(..items) = box(baseline: 25%)[
+  #grid(columns: items.pos().len(), align: horizon, gutter: 3pt, ..items)
 ]
 
-#let transporter-rejoin() = box(baseline: 25%)[
-  #grid(
-    columns: (auto, auto, auto),
-    align: horizon,
-    gutter: 3pt,
-    table(
-      columns: 14pt,
-      rows: (8pt, 8pt),
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 7.5pt)[$X$],
-      text(size: 7.5pt)[$Y$],
-    ),
-    text(size: 9pt)[$arrow.r$],
-    table(
-      columns: 14pt,
-      rows: 14pt,
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 8pt)[$X$],
-    ),
-  )
-]
+#let transporter-split() = transporter-diagram(
+  t-box("X"),
+  text(size: 9pt)[$arrow.r$],
+  t-box("X", "Y"),
+)
 
-#let transporter-cycle() = box(baseline: 25%)[
-  #grid(
-    columns: 5,
-    align: horizon,
-    gutter: 3pt,
-    table(
-      columns: 14pt,
-      rows: 14pt,
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 8pt)[$X$],
-    ),
-    text(size: 9pt)[$arrow.r.double$],
-    table(
-      columns: 14pt,
-      rows: (8pt, 8pt),
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 7.5pt)[$X$],
-      text(size: 7.5pt)[$Y$],
-    ),
-    text(size: 9pt)[$arrow.r.double$],
-    table(
-      columns: 14pt,
-      rows: 14pt,
-      align: center + horizon,
-      stroke: 0.5pt,
-      inset: 0pt,
-      text(size: 8pt)[$X$],
-    ),
-  )
-]
+#let transporter-rejoin() = transporter-diagram(
+  t-box("X", "Y"),
+  text(size: 9pt)[$arrow.r$],
+  t-box("X"),
+)
+
+#let transporter-cycle() = transporter-diagram(
+  t-box("X"),
+  text(size: 9pt)[$arrow.r.double$],
+  t-box("X", "Y"),
+  text(size: 9pt)[$arrow.r.double$],
+  t-box("X"),
+)
+
+#let inline-html = (
+  sub: (attrs, body) => sub(body),
+  sup: (attrs, body) => super(body),
+  i: (attrs, body) => emph(body),
+  em: (attrs, body) => emph(body),
+)
+
+#let treason-symbol() = box(
+  height: 1.5em,
+  baseline: 20%,
+  image("treason.svg", height: 1.5em),
+)
+
+#let roman-symbols = (
+  rn: rn,
+  roman: rn,
+  "roman-50": ("void", attrs => roman-fifty()),
+  "roman-500": ("void", attrs => roman-five-hundred()),
+  "roman-1000": ("void", attrs => roman-one-thousand()),
+  "rn-50": ("void", attrs => roman-fifty()),
+  "rn-500": ("void", attrs => roman-five-hundred()),
+  "rn-1000": ("void", attrs => roman-one-thousand()),
+)
+
+#let render-image-item(images, path, alt) = {
+  let item = if path in images { images.at(path) } else { image(path) }
+  if alt != none and alt != "" {
+    align(center)[
+      #item
+      #v(0.3em)
+      #text(size: 9pt)[#cmarker.render(alt, html: inline-html)]
+    ]
+  } else {
+    align(center, item)
+  }
+}
 
 #let render-md(file, images: (:), math: false) = {
   cmarker.render(
     read(file),
     math: if math { mitex } else { none },
     scope: (
-      image: (path, ..args) => {
-        let img = images.at(path, default: none)
-        let content-item = if img != none { img } else { image(path) }
-        let alt = args.named().at("alt", default: none)
-        if alt != none and alt != "" {
-          align(center)[
-            #content-item
-            #v(0.3em)
-            #text(size: 9pt)[
-              #cmarker.render(
-                alt,
-                html: (
-                  sub: (attrs, body) => sub(body),
-                  sup: (attrs, body) => super(body),
-                  i: (attrs, body) => emph(body),
-                  em: (attrs, body) => emph(body),
-                ),
-              )
-            ]
-          ]
-        } else {
-          align(center)[#content-item]
-        }
-      },
+      image: (path, ..args) => render-image-item(
+        images,
+        path,
+        args.named().at("alt", default: none),
+      ),
     ),
     html: (
-      sub: (attrs, body) => sub(body),
-      sup: (attrs, body) => super(body),
-      i: (attrs, body) => emph(body),
-      em: (attrs, body) => emph(body),
+      ..inline-html,
+      ..roman-symbols,
       epigraph: epigraph,
       cite: cite,
       footnote: (attrs, body) => footnote(body),
       fn: (attrs, body) => footnote(body),
-      span: (attrs, body) => {
-        if "explanation" in attrs {
-          [#body#footnote(attrs.explanation)]
-        } else {
-          body
-        }
+      span: (attrs, body) => if "explanation" in attrs {
+        [#body#footnote(attrs.explanation)]
+      } else {
+        body
       },
       terminology: terminology,
       meanings: meanings,
       summary: summary,
       dialogue: dialogue,
       "simultaneous-dialog2": simultaneous-dialog2,
+      grid: grid-tag,
+      "side-by-side": grid-tag,
       center: center-block,
       principle: center-block,
       announcement: announcement,
       instructions: announcement,
       "dotted-box": announcement,
-      pre: (attrs, body) => [
-        #text(
-          font: ("Courier New", "Liberation Mono"),
-          size: 0.9em,
-          body,
-        )
-      ],
+      pre: (attrs, body) => text(
+        font: ("Courier New", "Liberation Mono"),
+        size: 0.9em,
+        body,
+      ),
       chapter: ("void", chapter-ref),
       noindent: (attrs, body) => [
         #set par(first-line-indent: 0pt)
@@ -431,25 +429,10 @@
       "br-gap": ("void", attrs => v(1.2em)),
       "sun-symbol": ("void", attrs => sun-symbol()),
       "up-arrow": ("void", attrs => up-arrow()),
-      treason: (
-        "void",
-        attrs => box(
-          height: 1.5em,
-          baseline: 20%,
-          image("treason.svg", height: 1.5em),
-        ),
-      ),
+      treason: ("void", attrs => treason-symbol()),
       tally: ("void", attrs => tally(attrs, none)),
       tally4: ("void", attrs => tally((count: 4, crossed: true), none)),
       tally1: ("void", attrs => tally((count: 1), none)),
-      rn: rn,
-      roman: rn,
-      "roman-50": ("void", attrs => roman-fifty()),
-      "roman-500": ("void", attrs => roman-five-hundred()),
-      "roman-1000": ("void", attrs => roman-one-thousand()),
-      "rn-50": ("void", attrs => roman-fifty()),
-      "rn-500": ("void", attrs => roman-five-hundred()),
-      "rn-1000": ("void", attrs => roman-one-thousand()),
       "transporter-split": ("void", attrs => transporter-split()),
       "transporter-rejoin": ("void", attrs => transporter-rejoin()),
       "transporter-cycle": ("void", attrs => transporter-cycle()),
