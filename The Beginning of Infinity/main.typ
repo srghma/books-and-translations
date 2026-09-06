@@ -1,8 +1,10 @@
 #import "@preview/cmarker:0.1.10"
+#import "@preview/mitex:0.2.7": mitex
 
 #import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n, str-to-lines
 #import "sun-symbol.typ": sun-symbol
 #import "up-arrow.typ": up-arrow
+#import "tallies-and-roman.typ": rn, roman-fifty, roman-five-hundred, roman-one-thousand, tally
 
 #let t = load-i18n("main.i18n.yml")
 
@@ -249,7 +251,7 @@
       leading: 0.65em,
       spacing: 0.85em,
     )
-    #show regex("^[a-zA-Z ]+:"): it => text(tracking: 0.04em)[#smallcaps(lower(
+    #show regex("^[A-Z][a-zA-Z ]{0,20}:"): it => text(tracking: 0.04em)[#smallcaps(lower(
       it.text,
     ))]
     #body
@@ -257,18 +259,42 @@
   #v(0.8em)
 ]
 
-#let chapter-ref(attrs, body) = link(
+#let announcement(attrs, body) = [
+  #v(0.8em)
+  #rect(
+    width: 100%,
+    stroke: (dash: "dotted", thickness: 0.75pt, paint: black),
+    inset: (x: 12pt, top: 10pt, bottom: 10pt),
+  )[
+    #set text(size: 9.5pt)
+    #set par(
+      justify: true,
+      leading: 0.65em,
+      first-line-indent: (amount: 1.5em, all: true),
+    )
+    #body
+  ]
+  #v(0.8em)
+]
+
+#let center-block(attrs, body) = [
+  #v(0.5em)
+  #align(center)[
+    #set par(first-line-indent: 0pt, leading: 0.65em)
+    #body
+  ]
+  #v(0.5em)
+]
+
+#let chapter-ref(attrs) = link(
   label("chapter-" + str(attrs.to)),
   [#t("Chapter") #attrs.to],
 )
 
-#let render-md(file, images: (:)) = {
-  let content = read(file).replace(
-    regex("<([a-zA-Z0-9_-]+)([^>]*?)\s*/>"),
-    m => "<" + m.captures.at(0) + m.captures.at(1) + "></" + m.captures.at(0) + ">",
-  )
+#let render-md(file, images: (:), math: false) = {
   cmarker.render(
-    content,
+    read(file),
+    math: if math { mitex } else { none },
     scope: (
       image: (path, ..args) => {
         let img = images.at(path, default: none)
@@ -300,22 +326,56 @@
       meanings: meanings,
       summary: summary,
       dialogue: dialogue,
-      dialog: dialogue,
-      chapter: chapter-ref,
-      "sun-symbol": (attrs, body) => sun-symbol(),
-      "up-arrow": (attrs, body) => up-arrow(),
-      treason: (attrs, body) => box(
-        height: 1.5em,
-        baseline: 20%,
-        image("treason.svg", height: 1.5em),
+      center: center-block,
+      principle: center-block,
+      announcement: announcement,
+      instructions: announcement,
+      "dotted-box": announcement,
+      pre: (attrs, body) => [
+        #show regex("^[A-Z][a-zA-Z ]{0,20}:"): it => it
+        #text(
+          font: ("Courier New", "Liberation Mono"),
+          size: 0.9em,
+          body,
+        )
+      ],
+      chapter: ("void", chapter-ref),
+      "sun-symbol": ("void", attrs => sun-symbol()),
+      "up-arrow": ("void", attrs => up-arrow()),
+      treason: (
+        "void",
+        attrs => box(
+          height: 1.5em,
+          baseline: 20%,
+          image("treason.svg", height: 1.5em),
+        ),
       ),
+      tally: ("void", attrs => tally(attrs, none)),
+      tally4: ("void", attrs => tally((count: 4, crossed: true), none)),
+      tally1: ("void", attrs => tally((count: 1), none)),
+      rn: rn,
+      roman: rn,
+      "roman-50": ("void", attrs => roman-fifty()),
+      "roman-500": ("void", attrs => roman-five-hundred()),
+      "roman-1000": ("void", attrs => roman-one-thousand()),
+      "rn-50": ("void", attrs => roman-fifty()),
+      "rn-500": ("void", attrs => roman-five-hundred()),
+      "rn-1000": ("void", attrs => roman-one-thousand()),
     ),
   )
 }
 
-#let render-chapter(num, title, images: (:)) = [
-  #heading(level: 1, t(title)) #label("chapter-" + str(num))
-  #render-md(str(num) + ". " + title + ".md", images: images)
+#let render-chapter(num, title, images: (:), math: false) = [
+  #heading(
+    level: 1,
+    t(title),
+  ) 
+  #label("chapter-" + str(num))
+  #render-md(
+    str(num) + ". " + title + ".md",
+    images: images,
+    math: math,
+  )
   #pagebreak()
 ]
 
@@ -382,7 +442,7 @@
 
 #render-chapter(5, "The Reality of Abstractions")
 
-#render-chapter(6, "The Jump to Universality")
+#render-chapter(6, "The Jump to Universality", math: true)
 
 #render-chapter(7, "Artificial Creativity")
 
@@ -390,6 +450,9 @@
   8,
   "A Window on Infinity",
   images: (
+    _page_171_Table_1: include "_page_171_Table_1.typ",
+    _page_172_Table_1: include "_page_172_Table_1.typ",
+    _page_176_Table_1: include "_page_176_Table_1.typ",
     _page_177_Figure_4: include "_page_177_Figure_4.typ",
     _page_178_Picture_2: image("_page_178_Picture_2.jpeg"),
     _page_180_Figure_1: include "_page_180_Figure_1.typ",
@@ -405,6 +468,7 @@
 #render-chapter(
   11,
   "The Multiverse",
+  math: true,
   images: (
     _page_295_Diagram_1: include "_page_295_Diagram_1.typ",
     _page_296_Picture_1: include "_page_296_Picture_1.typ",
