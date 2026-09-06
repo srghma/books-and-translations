@@ -5,4 +5,4 @@ this book.
 
 The scanning, uploading, and distribution of this book via the Internet or via any other means without the permission of
 the publisher is illegal and punishable by law. Please purchase only authorized electronic editions and do not participate in
-or encourage electronic piracy of copyrightable materials. Your support of the author’s rights is appreciated
+or encourage electronic piracy of copyrightable materials. Your support of the author’s rights is appreciated.
