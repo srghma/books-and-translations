@@ -1,0 +1,27 @@
+"Object":
+  km: "វត្ថុ"
+  de: "Objekt"
+
+"Rest of world":
+  km: "ពិភពលោកដែលនៅសល់"
+  de: "Rest der Welt"
+
+"Not differentially\naffected by X and Y":
+  km: "មិនរងផលប៉ះពាល់ខុសគ្នា\nដោយសារ X និង Y"
+  de: "Nicht unterschiedlich\ndurch X und Y beeinflusst"
+
+"Affected by X":
+  km: "រងផលប៉ះពាល់ដោយសារ X"
+  de: "Durch X beeinflusst"
+
+"Affected (differently) by Y":
+  km: "រងផលប៉ះពាល់ (ខុសគ្នា) ដោយសារ Y"
+  de: "Durch Y (unterschiedlich) beeinflusst"
+
+"not entangled":
+  km: "មិនជាប់ជំពាក់"
+  de: "nicht verschränkt"
+
+"entangled":
+  km: "ជាប់ជំពាក់"
+  de: "verschränkt"

@@ -1,18 +1,19 @@
 #import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n
 // Initialize translator
 #let t = load-i18n("_page_295_Diagram_1.i18n.yml")
+
 /// Renders the quantum multiverse splitting and entanglement diagram
 #let multiverse-entanglement-diagram(
-  box1-w: 86pt,
+  box1-w: 92pt,
   arrow1-w: 36pt,
-  box2-w: 132pt,
-  arrow2-w: 58pt,
-  box3-w: 160pt,
-  obj-w: 22pt,
+  box2-w: 136pt,
+  arrow2-w: 56pt,
+  box3-w: 164pt,
+  obj-w: 34pt,
   box-h: 30pt,
-  header-h: 18pt,
+  header-h: 15pt,
   transition-h: 30pt,
-  transition-w: 62pt,
+  transition-w: 64pt,
   font-size: 7.5pt,
   header-size: 8pt,
   arrow-label-size: 7.5pt,
@@ -21,38 +22,42 @@
   let sans-fonts = fonts-for-current-lang.sans
   let solid-stroke = 0.75pt + black
   let dashed-stroke = (paint: black, thickness: 0.75pt, dash: (2.5pt, 2pt))
+
   // Header helper for tables
   let make-header(width, has-obj: true) = {
     box(width: width, height: header-h)[
-      #grid(
-        columns: (obj-w, 0.5fr),
-        rows: auto,
-        stroke: none,
-        if has-obj {
-          align(center + bottom)[
-            #text(font: sans-fonts, size: header-size)[#t("Object")]
-          ]
-        } else {
-          align(center + bottom)[
-            #text(size: 18pt)[#sym.arrow.b.double]
-          ]
-        },
-        align(center + bottom)[
-          #text(font: sans-fonts, size: header-size)[#t("Rest of world")]
-        ],
-      )
-      #v(3pt)
+      #align(center + top)[
+        #grid(
+          columns: (obj-w, 1fr),
+          rows: auto,
+          stroke: none,
+          if has-obj {
+            align(center + top)[
+              #text(font: sans-fonts, size: header-size)[#t("Object")]
+            ]
+          } else {
+            align(center + top)[
+              #text(size: 16pt)[#sym.arrow.b.double]
+            ]
+          },
+          align(center + top)[
+            #text(font: sans-fonts, size: header-size)[#t("Rest of world")]
+          ],
+        )
+      ]
     ]
   }
+
   // Horizontal arrow cell helper (vertically centered to box-h)
   let make-h-arrow(label, symbol, width) = {
     box(width: width, height: box-h)[
       #align(center + horizon)[
-        #text(font: sans-fonts, style: "italic", size: arrow-label-size)[#label]
+        #text(font: sans-fonts, style: "italic", weight: "regular", size: arrow-label-size)[#label]
         #text(size: 13pt)[#symbol]
       ]
     ]
   }
+
   // --- Box 1: Object X | Unaffected ---
   let box-1 = rect(
     width: box1-w,
@@ -71,10 +76,13 @@
         align(center + horizon)[$X$],
       ),
       align(center + horizon)[
-        #text(font: sans-fonts, size: font-size)[#t("Unaffected")]
+        #box(inset: (x: 2pt))[
+          #text(font: sans-fonts, size: font-size)[#t("Unaffected")]
+        ]
       ],
     ),
   )
+
   // --- Box 2: Object [X / Y] | Not differentially affected by X and Y ---
   let box-2 = rect(
     width: box2-w,
@@ -106,12 +114,15 @@
       ),
       align(center + horizon)[
         #set par(leading: 0.35em)
-        #text(font: sans-fonts, size: font-size)[#t(
-          "Not differentially\naffected by X and Y",
-        )]
+        #box(inset: (x: 2pt))[
+          #text(font: sans-fonts, size: font-size)[#t(
+            "Not differentially\naffected by X and Y",
+          )]
+        ]
       ],
     ),
   )
+
   // --- Box 3: Entangled [X: Affected by X / Y: Affected by Y] ---
   let box-3 = rect(
     width: box3-w,
@@ -140,7 +151,9 @@
             align(center + horizon)[$X$],
           ),
           align(center + horizon)[
-            #text(font: sans-fonts, size: font-size)[#t("Affected by X")]
+            #box(inset: (x: 2pt))[
+              #text(font: sans-fonts, size: font-size)[#t("Affected by X")]
+            ]
           ],
         ),
       ),
@@ -157,36 +170,32 @@
           align(center + horizon)[$Y$],
         ),
         align(center + horizon)[
-          #text(font: sans-fonts, size: font-size)[#t(
-            "Affected (differently) by Y",
-          )]
+          #box(inset: (x: 2pt))[
+            #text(font: sans-fonts, size: font-size)[#t(
+              "Affected (differently) by Y",
+            )]
+          ]
         ],
       ),
     ),
   )
+
   // --- Downward Transition Label + Arrow ---
-  // A standalone widget (fixed width, independent of the grid columns) so it
-  // can be positioned freely rather than centered under the whole box3-w
-  // column. It is placed via #place() directly above the X/Y/Y/X object
-  // column of box-4, matching the source figure, and is allowed to overflow
-  // its nominal column since it's wider than the narrow obj-w column.
   let vertical-transition = box(width: transition-w)[
     #align(center)[
-      #v(3pt)
-      #text(font: sans-fonts, weight: "bold", size: font-size)[#t(
+      #v(4pt)
+      #text(font: sans-fonts, style: "italic", weight: "bold", size: font-size)[#t(
         "no interference,",
       )]\
-      #text(font: sans-fonts, style: "italic", size: font-size)[#t(
+      #text(font: sans-fonts, style: "italic", weight: "regular", size: font-size)[#t(
         "just splitting",
       )]
-      #v(0pt)
     ]
   ]
-  // x-offset: center of the object column of box-3/box-4 (which sits at the
-  // very start of the box3-w column), minus half the widget's own width.
+
   let transition-dx = box1-w + arrow1-w + box2-w + arrow2-w + obj-w / 2 - transition-w / 2
-  // y-offset: top of row 2, i.e. just below the header row + box row.
   let transition-dy = header-h + box-h
+
   // --- Box 4: 4-Subrow Split with Dashed Entanglement Divider ---
   let box-4 = rect(
     width: box3-w,
@@ -227,7 +236,9 @@
             ),
           ),
           align(center + horizon)[
-            #text(font: sans-fonts, size: font-size)[#t("Affected by X")]
+            #box(inset: (x: 2pt))[
+              #text(font: sans-fonts, size: font-size)[#t("Affected by X")]
+            ]
           ],
         ),
       ),
@@ -256,13 +267,16 @@
           ),
         ),
         align(center + horizon)[
-          #text(font: sans-fonts, size: font-size)[#t(
-            "Affected (differently) by Y",
-          )]
+          #box(inset: (x: 2pt))[
+            #text(font: sans-fonts, size: font-size)[#t(
+              "Affected (differently) by Y",
+            )]
+          ]
         ],
       ),
     ),
   )
+
   // Master Layout: Fully Grid-Structured
   align(center)[
     #block(inset: (y: v-padding))[
@@ -284,21 +298,26 @@
           box-2,
           make-h-arrow(t("entanglement"), sym.arrow.r, arrow2-w),
           box-3,
-          // Row 2: Spacer only — reserves vertical space; the actual
-          // transition widget is placed independently below, since it needs
-          // to sit above the object column rather than centered in this cell.
+          // Row 2: Spacer only
           [], [], [], [], box(height: transition-h),
           // Row 3: Header for Box 4
           [], [], [], [], make-header(box3-w, has-obj: false),
           // Row 4: Box 4
           [], [], [], [], box-4,
         )
-        // Independent overlay: positioned above the X/Y/Y/X object column
-        // of box-4, breaking free of the grid's column-centered alignment.
+        // Independent overlay
         #place(top + left, dx: transition-dx, dy: transition-dy)[#vertical-transition]
       ]
     ]
   ]
 }
-// Default preview
-#multiverse-entanglement-diagram()
+
+// Auto-fit to available page width
+#layout(size => {
+  let target-w = size.width
+  let diagram-w = 484pt
+  let s = if target-w < diagram-w { (target-w / diagram-w) * 100% } else { 100% }
+  scale(x: s, y: s, reflow: true)[
+    #multiverse-entanglement-diagram()
+  ]
+})

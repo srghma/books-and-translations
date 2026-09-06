@@ -1,87 +1,79 @@
-#let arrow-step(
-  label,
-  arrow: $arrow.r.double$,
-  arrow-size: 1.3em,
-) = align(center + horizon)[
-  #text(style: "italic")[#label] \
-  #v(-2pt)
-  #text(size: arrow-size)[#arrow]
-]
-
-#import "i18n.typ": current-lang, load-i18n
-
+#import "i18n.typ": current-lang, fonts-for-current-lang, load-i18n
 #let t = load-i18n("_page_306_Diagram_1.i18n.yml")
 
-#let input = $X$
-#let output = $f(X)$
-#let step1 = t("splitting")
-#let step2 = t("interference")
-#let branches = ([$Y_1$], [$Y_2$])
-#let last-branch = $Y(italic(#t("many")))$
+// --- Dimensions ---
+#let H = 5.5em
+#let W = 4.6em
+#let W-mid = 4.8em
 
-// Pipeline diagram (no default content values; keyed arguments)
-#let pipeline-diagram(
-  show-dots: true,
+// --- Diagram Boxes ---
+#let box-left = rect(
+  width: W,
+  height: H,
+  stroke: 0.75pt,
+  inset: 0pt,
+)[#align(center + horizon)[$X$]]
 
-  // Sizing & styling defaults
-  box-size: (80pt, 80pt),
-  arrow-widths: (85pt, 95pt),
-  branch-width: 75pt,
-  branch-row-height: 22pt,
-  stroke: 0.8pt,
-  arrow: $arrow.r.double$,
-  column-gutter: 0pt,
-) = {
-  let (box-w, box-h) = box-size
-  let (arrow-w1, arrow-w2) = arrow-widths
+#let box-right = rect(
+  width: W,
+  height: H,
+  stroke: 0.75pt,
+  inset: 0pt,
+)[#align(center + horizon)[$f(X)$]]
 
-  align(center)[
-    #grid(
-      columns: (box-w, arrow-w1, branch-width, arrow-w2, box-w),
-      column-gutter: column-gutter,
+#let box-mid = box(
+  width: W-mid,
+  height: H,
+  stack(
+    dir: ttb,
+    // Top double-box for Y_1 and Y_2 (height 3.0em, each row 1.5em)
+    table(
+      columns: 100%,
+      rows: (1.5em, 1.5em),
       align: center + horizon,
+      stroke: 0.75pt,
+      inset: 0pt,
+      [$Y_1$],
+      [$Y_2$],
+    ),
+    // Vertical dots
+    rect(
+      width: 100%,
+      height: 1.0em,
+      stroke: none,
+      inset: 0pt,
+    )[
+      #align(center + horizon)[$dots.v$]
+    ],
+    // Bottom box for Y(many)
+    rect(
+      width: 100%,
+      height: 1.5em,
+      stroke: 0.75pt,
+      inset: 0pt,
+    )[
+      #align(center + horizon)[$Y(italic(#t("many")))$]
+    ],
+  ),
+)
 
-      // 1. Left Box (Input)
-      rect(width: box-w, height: box-h, stroke: stroke)[
-        #align(center + horizon)[#input]
-      ],
-
-      // 2. Arrow 1 (Step 1)
-      arrow-step(step1, arrow: arrow),
-
-      // 3. Middle Column (Branches)
-      stack(
-        spacing: 0pt,
-        if branches.len() > 0 {
-          table(
-            columns: branch-width,
-            rows: branches.len() * (branch-row-height,),
-            stroke: stroke,
-            align: center + horizon,
-            ..branches,
-          )
-        },
-        if show-dots {
-          stack(
-            v(4pt),
-            $dots.v$,
-            v(4pt),
-          )
-        },
-        if last-branch != none {
-          rect(width: branch-width, height: branch-row-height, stroke: stroke)[
-            #align(center + horizon)[#last-branch]
-          ]
-        },
-      ),
-
-      // 4. Arrow 2 (Step 2)
-      arrow-step(step2, arrow: arrow),
-
-      // 5. Right Box (Output)
-      rect(width: box-w, height: box-h, stroke: stroke)[
-        #align(center + horizon)[#output]
-      ],
-    )
-  ]
-}
+#v(0.6em)
+// --- Diagram Layout ---
+#align(center)[
+  #grid(
+    columns: 5,
+    column-gutter: 1.4em,
+    align: center + horizon,
+    box-left,
+    [
+      #text(style: "italic")[#t("splitting")] \
+      #text(size: 2em)[$arrow.r.double$]
+    ],
+    box-mid,
+    [
+      #text(style: "italic")[#t("interference")] \
+      #text(size: 2em)[$arrow.r.double$]
+    ],
+    box-right,
+  )
+]

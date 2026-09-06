@@ -153,8 +153,6 @@
     align(center)[
       #text(size: 16pt)[#it.body]
     ]
-
-    v(3.5em)
   }
 }
 
@@ -162,7 +160,7 @@
 #set par(
   justify: true,
   leading: 0.75em, // line spacing
-  spacing: 1.5em, // blank space between paragraphs
+  spacing: 0.75em, // blank space between paragraphs
 )
 
 // ==========================================
@@ -275,6 +273,93 @@
   [#t("Chapter") #attrs.to],
 )
 
+#let transporter-split() = box(baseline: 25%)[
+  #grid(
+    columns: (auto, auto, auto),
+    align: horizon,
+    gutter: 3pt,
+    table(
+      columns: 14pt,
+      rows: 14pt,
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 8pt)[$X$],
+    ),
+    text(size: 9pt)[$arrow.r$],
+    table(
+      columns: 14pt,
+      rows: (8pt, 8pt),
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 7.5pt)[$X$],
+      text(size: 7.5pt)[$Y$],
+    ),
+  )
+]
+
+#let transporter-rejoin() = box(baseline: 25%)[
+  #grid(
+    columns: (auto, auto, auto),
+    align: horizon,
+    gutter: 3pt,
+    table(
+      columns: 14pt,
+      rows: (8pt, 8pt),
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 7.5pt)[$X$],
+      text(size: 7.5pt)[$Y$],
+    ),
+    text(size: 9pt)[$arrow.r$],
+    table(
+      columns: 14pt,
+      rows: 14pt,
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 8pt)[$X$],
+    ),
+  )
+]
+
+#let transporter-cycle() = box(baseline: 25%)[
+  #grid(
+    columns: 5,
+    align: horizon,
+    gutter: 3pt,
+    table(
+      columns: 14pt,
+      rows: 14pt,
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 8pt)[$X$],
+    ),
+    text(size: 9pt)[$arrow.r.double$],
+    table(
+      columns: 14pt,
+      rows: (8pt, 8pt),
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 7.5pt)[$X$],
+      text(size: 7.5pt)[$Y$],
+    ),
+    text(size: 9pt)[$arrow.r.double$],
+    table(
+      columns: 14pt,
+      rows: 14pt,
+      align: center + horizon,
+      stroke: 0.5pt,
+      inset: 0pt,
+      text(size: 8pt)[$X$],
+    ),
+  )
+]
+
 #let render-md(file, images: (:), math: false) = {
   cmarker.render(
     read(file),
@@ -287,7 +372,18 @@
         if alt != none and alt != "" {
           align(center)[
             #content-item
-            #text(size: 9pt)[#alt]
+            #v(0.3em)
+            #text(size: 9pt)[
+              #cmarker.render(
+                alt,
+                html: (
+                  sub: (attrs, body) => sub(body),
+                  sup: (attrs, body) => super(body),
+                  i: (attrs, body) => emph(body),
+                  em: (attrs, body) => emph(body),
+                ),
+              )
+            ]
           ]
         } else {
           align(center)[#content-item]
@@ -295,6 +391,10 @@
       },
     ),
     html: (
+      sub: (attrs, body) => sub(body),
+      sup: (attrs, body) => super(body),
+      i: (attrs, body) => emph(body),
+      em: (attrs, body) => emph(body),
       epigraph: epigraph,
       cite: cite,
       footnote: (attrs, body) => footnote(body),
@@ -324,6 +424,11 @@
         )
       ],
       chapter: ("void", chapter-ref),
+      noindent: (attrs, body) => [
+        #set par(first-line-indent: 0pt)
+        #body
+      ],
+      "br-gap": ("void", attrs => v(1.2em)),
       "sun-symbol": ("void", attrs => sun-symbol()),
       "up-arrow": ("void", attrs => up-arrow()),
       treason: (
@@ -345,16 +450,31 @@
       "rn-50": ("void", attrs => roman-fifty()),
       "rn-500": ("void", attrs => roman-five-hundred()),
       "rn-1000": ("void", attrs => roman-one-thousand()),
+      "transporter-split": ("void", attrs => transporter-split()),
+      "transporter-rejoin": ("void", attrs => transporter-rejoin()),
+      "transporter-cycle": ("void", attrs => transporter-cycle()),
     ),
   )
 }
 
-#let render-chapter(num, title, images: (:), math: false) = [
+#let render-chapter(
+  num,
+  title,
+  subtitle: none,
+  images: (:),
+  math: false,
+) = [
   #heading(
     level: 1,
     t(title),
   )
   #label("chapter-" + str(num))
+  #if subtitle != none [
+    #align(center)[
+      #text(size: 12pt, weight: "regular", style: "italic")[#t(subtitle)]
+    ]
+  ]
+  #v(3.5em)
   #render-md(
     str(num) + ". " + title + ".md",
     images: images,
@@ -386,7 +506,7 @@
 #set par(
   justify: true,
   leading: 0.68em,
-  first-line-indent: 1.5em,
+  first-line-indent: (amount: 1.5em, all: true),
 )
 
 #render-chapter(
@@ -454,15 +574,27 @@
   "The Multiverse",
   math: true,
   images: (
+    _page_293_Diagram_1: include "_page_293_Diagram_1.typ",
+    _page_293_Diagram_2: include "_page_293_Diagram_2.typ",
+    _page_294_Diagram_1: include "_page_294_Diagram_1.typ",
     _page_295_Diagram_1: include "_page_295_Diagram_1.typ",
+    _page_295_Diagram_2: include "_page_295_Diagram_2.typ",
+    _page_295_Diagram_3: include "_page_295_Diagram_3.typ",
     _page_296_Picture_1: include "_page_296_Picture_1.typ",
+    _page_297_Picture_1: include "_page_297_Picture_1.typ",
+    _page_298_Diagram_1: include "_page_298_Diagram_1.typ",
     _page_298_Picture_5: include "_page_298_Picture_5.typ",
     _page_298_Picture_7: include "_page_298_Picture_7.typ",
+    _page_298_Picture_9: include "_page_298_Picture_9.typ",
     _page_306_Diagram_1: include "_page_306_Diagram_1.typ",
   ),
 )
 
-#render-chapter(12, "A Physicist’s History of Bad Philosophy")
+#render-chapter(
+  12,
+  "A Physicist’s History of Bad Philosophy",
+  subtitle: "With Some Comments on Bad Science",
+)
 
 #render-chapter(13, "Choices")
 
@@ -501,5 +633,3 @@
 // #render-md("Bibliography.md")
 // #render-md("Index.md")
 
-// #import "_page_306_Diagram_1.typ": pipeline-diagram
-// #pipeline-diagram()

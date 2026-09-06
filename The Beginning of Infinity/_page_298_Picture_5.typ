@@ -1,50 +1,41 @@
-#import "@preview/cetz:0.5.2"
+#import "@preview/cetz:0.5.2": canvas, draw
 
-#let curved-cross(
-  length: 1.8, // Distance from center to arrow tip / tail
-  gap: 0.08, // Offset away from center (controls the spacing between curves)
-  bend: 0.1, // Curvature control distance (higher = wider curve, lower = sharper)
-  thickness: 7.5pt, // Stroke thickness
-  color: rgb("86898e"),
-  mark-size: 0.35,
-  mark-type: "triangle",
-) = {
-  cetz.canvas({
-    import cetz.draw: *
+#v(0.6em)
+#align(center)[
+  #canvas(length: 1cm, {
+    import draw: *
 
-    let stroke-style = (paint: color, thickness: thickness, cap: "round")
-    let mark-style = (end: mark-type, fill: color, size: mark-size)
+    let ray-color = rgb("787d82")
+    let stroke-style = (paint: ray-color, thickness: 5.5pt, cap: "round")
+    let arrow-style = (end: "stealth", size: 0.38, fill: ray-color)
 
-    // Base curve: starts left, bends upwards
-    let base = (
-      start: (-length, -gap),
-      end: (-gap, length),
-      ctrl1: (-bend, -gap),
-      ctrl2: (-gap, bend),
+    let xc = -0.1
+    let yc = -0.1
+    let x-start = -1.15
+    let x-end = 1.35
+    let y-start = -1.2
+    let y-end = 1.35
+    let gap = 0.02
+
+    // Top-left deflecting ray: incoming horizontal from left, bends up to top
+    let x-bend = xc - gap
+    let y-bend = yc + gap
+    bezier(
+      (x-start, y-bend), (x-bend, y-end),
+      (x-bend - 0.1, y-bend), (x-bend, y-bend + 0.1),
+      stroke: stroke-style,
+      mark: arrow-style,
     )
 
-    // Second curve: reflected across the diagonal y = x: (x, y) -> (y, x)
-    let reflect(pt) = (pt.at(1), pt.at(0))
-
-    let reflected = (
-      start: reflect(base.start),
-      end: reflect(base.end),
-      ctrl1: reflect(base.ctrl1),
-      ctrl2: reflect(base.ctrl2),
+    // Bottom-right deflecting ray: incoming vertical from bottom, bends right to horizontal
+    let xb2 = xc + gap
+    let yb2 = yc - gap
+    bezier(
+      (xb2, y-start), (x-end, yb2),
+      (xb2, yb2 - 0.1), (xb2 + 0.1, yb2),
+      stroke: stroke-style,
+      mark: arrow-style,
     )
-
-    for c in (base, reflected) {
-      bezier(
-        c.start,
-        c.end,
-        c.ctrl1,
-        c.ctrl2,
-        stroke: stroke-style,
-        mark: mark-style,
-      )
-    }
   })
-}
-
-// Default (matches your image)
-#curved-cross()
+]
+#v(0.6em)

@@ -8,7 +8,7 @@
   width: 210pt,
   height: 140pt,
   beam-color: rgb("#868a90"),
-  mirror-color: rgb("#72767c"),
+  mirror-color: rgb("#72767c80"),
   text-color: rgb("#222428"),
   stroke-width: 1.2pt,
   font-size: 11pt,
@@ -74,8 +74,8 @@
         // 4. Semi-silvered Mirror (angled at 45 degrees)
         #place(
           center + horizon,
-          dx: x-bs - width / 2,
-          dy: y-bs - height / 2,
+          dx: x-bs - width / 2 + 2pt,
+          dy: y-bs - height / 2 - 2pt,
           rotate(
             45deg,
             rect(

@@ -4,10 +4,10 @@
     "Times New Roman"
   ],
   "base-sans": [
-    "Trebuchet MS",
-    "Impact",
     "Liberation Sans",
-    "Arial"
+    "Arial",
+    "Trebuchet MS",
+    "Impact"
   ],
   "lang-to-fonts-map": {
     "km": {
