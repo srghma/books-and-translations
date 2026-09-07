@@ -97,11 +97,11 @@ def build_heading_pattern(title: str) -> re.Pattern:
     return re.compile(pattern_str, re.IGNORECASE)
 
 
-def sanitize_filename(name: str, replace_invalid: bool = False) -> str:
-    """Sanitizes filename for filesystem safety if requested."""
-    if replace_invalid:
-        return re.sub(r'[<>:"/\\|?*]', "_", name).strip()
-    return name.replace("/", "_").replace("\0", "").strip()
+def sanitize_filename(name: str, replace_invalid: bool = True) -> str:
+    """Sanitizes filename for filesystem safety (Android, Windows, FAT32/exFAT, Linux)."""
+    # Remove characters forbidden on Android/FAT32/exFAT/Windows filesystems: < > : " \ | ? *
+    clean = re.sub(r'[<>:"\\|?*]', "", name) if replace_invalid else name
+    return clean.replace("/", "_").replace("\0", "").strip()
 
 
 def split_markdown_file(
@@ -111,7 +111,7 @@ def split_markdown_file(
     front_matter_name: str = "Front Matter.md",
     include_front_matter: bool = True,
     dry_run: bool = False,
-    replace_invalid_chars: bool = False,
+    replace_invalid_chars: bool = True,
 ) -> List[Tuple[Path, int]]:
     """
     Splits input_file based on TOC into separate markdown files.
@@ -249,10 +249,12 @@ def main():
         help="Filename for the front matter content (default: 'Front Matter.md')",
     )
     parser.add_argument(
-        "--sanitize-filenames",
-        action="store_true",
-        help="Replace characters like '?' and ':' in filenames with '_'",
+        "--no-sanitize-filenames",
+        dest="sanitize_filenames",
+        action="store_false",
+        help="Do not remove unsafe filesystem characters like '?' and ':' from filenames",
     )
+    parser.set_defaults(sanitize_filenames=True)
     parser.add_argument(
         "--dry-run",
         action="store_true",

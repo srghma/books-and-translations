@@ -478,8 +478,9 @@
     ]
   ]
   #v(3.5em)
+  #let chapter-file = str(num) + ". " + title.replace("?", "") + ".md"
   #render-md(
-    str(num) + ". " + title + ".md",
+    chapter-file,
     images: images,
     math: math,
   )
