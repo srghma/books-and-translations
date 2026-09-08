@@ -1,1 +1,0 @@
-translate_markdown_to_khmer.py
